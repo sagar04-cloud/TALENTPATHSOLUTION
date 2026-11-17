@@ -2,13 +2,11 @@ import { SEOHead } from '../components/common/SEOHead';
 import { AdmissionEnquiryForm } from '../components/forms/AdmissionEnquiryForm';
 import { 
   Clock, 
-  CheckCircle, 
   Briefcase, 
   Award, 
   BookOpen, 
-  Layers, 
-  ArrowRight,
-  ShieldCheck,
+  ArrowRight, 
+  ShieldCheck, 
   Sparkles
 } from 'lucide-react';
 import { Link } from 'react-router-dom';

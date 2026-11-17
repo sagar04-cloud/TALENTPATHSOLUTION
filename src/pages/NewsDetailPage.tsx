@@ -7,8 +7,7 @@ import {
   ArrowLeft, 
   Share2, 
   Check, 
-  MessageCircle, 
-  GraduationCap 
+  MessageCircle 
 } from 'lucide-react';
 import { newsService } from '../services/newsService';
 import { NewsArticle } from '../types';

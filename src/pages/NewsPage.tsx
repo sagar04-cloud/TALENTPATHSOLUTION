@@ -6,8 +6,7 @@ import {
   User, 
   ArrowRight, 
   Search, 
-  BookOpen, 
-  Tag 
+  BookOpen 
 } from 'lucide-react';
 import { newsService } from '../services/newsService';
 import { NewsArticle } from '../types';

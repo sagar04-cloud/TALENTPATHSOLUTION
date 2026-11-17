@@ -45,11 +45,15 @@ export interface CompanyConfig {
   };
   siteUrl: string;
   operatingHours: string;
+  logoUrl: string;
+  iconUrl: string;
 }
 
 export const COMPANY_CONFIG: CompanyConfig = {
   name: "Talent Path Solutions",
   tagline: "Your Next Step Starts Here",
+  logoUrl: "/logo.png",
+  iconUrl: "/logo-icon.png",
   shortDescription: "Empowering individuals and institutions through career guidance, flexible degrees, school education programs, and professional recruitment.",
   longDescription: "Talent Path Solutions is a dedicated education consultancy, career advisory, and workforce recruitment firm. We bridge the gap between academic aspiration and professional realization by delivering personalized guidance, flexible learning pathways, and trusted corporate talent solutions.",
   phone: {
@@ -62,9 +66,9 @@ export const COMPANY_CONFIG: CompanyConfig = {
     defaultMessage: "Hello Talent Path Solutions! I would like to inquire about your programs and career guidance services.",
   },
   email: {
-    admissions: "admissions@talentpathsolutions.com",
-    support: "info@talentpathsolutions.com",
-    recruitment: "recruitment@talentpathsolutions.com",
+    admissions: "sagaru.works@gmail.com",
+    support: "sagaru.works@gmail.com",
+    recruitment: "sagaru.works@gmail.com",
   },
   address: {
     street: "Level 4, Corporate Heights, MG Road",

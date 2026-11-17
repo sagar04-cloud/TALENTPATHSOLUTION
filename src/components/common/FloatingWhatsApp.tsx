@@ -38,8 +38,14 @@ export const FloatingWhatsApp = () => {
           <div className="bg-brand-navy p-4 text-white flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center font-bold text-white shadow-sm">
-                  TP
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm p-1 border border-slate-100 shrink-0">
+                  <img 
+                    src="/logo-icon.png" 
+                    alt="Talent Path Support" 
+                    className="w-full h-full object-contain"
+                    width="40"
+                    height="40"
+                  />
                 </div>
                 <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-brand-navy"></span>
               </div>

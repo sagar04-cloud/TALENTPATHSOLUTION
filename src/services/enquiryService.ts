@@ -1,25 +1,6 @@
-import { Enquiry, EnquiryStatus, EnquiryNote, FilterOptions } from '../types';
-import { INITIAL_ENQUIRIES } from '../data/initialData';
-import { trackFormSubmitSuccess } from '../lib/analytics';
-import { authService } from './authService';
-import { getFirebaseDb, getFirebaseRtdb, isFirebaseConfigured } from '../lib/firebase';
-import { 
-  collection, 
-  doc, 
-  setDoc, 
-  getDoc, 
-  getDocs, 
-  updateDoc, 
-  onSnapshot 
-} from 'firebase/firestore';
-import { 
-  ref, 
-  set, 
-  get, 
-  update, 
-  onValue, 
-  off 
-} from 'firebase/database';
+import type { Enquiry, EnquiryStatus, EnquiryNote, FilterOptions } from '../types/index.ts';
+import { INITIAL_ENQUIRIES } from '../data/initialData.ts';
+import { trackFormSubmitSuccess } from '../lib/analytics.ts';
 
 const STORAGE_KEY = 'tps_enquiries_v1';
 
@@ -118,6 +99,231 @@ export interface SubmitEnquiryInput {
   number_of_positions?: string;
 }
 
+export const ADMIN_NOTIFICATION_EMAIL = 'sagaru.works@gmail.com';
+
+export interface StructuredEmailResult {
+  subject: string;
+  body: string;
+  mailtoUrl: string;
+  gmailWebUrl: string;
+  autoresponseBody?: string;
+  thankYouSubject?: string;
+  thankYouBody?: string;
+}
+
+/**
+ * Builds a clean, professional, human-readable email format for candidate communication and counselor review
+ */
+export function buildStructuredEmail(enquiry: Enquiry): StructuredEmailResult {
+  const formattedDate = new Date(enquiry.created_at).toLocaleString('en-IN', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'Asia/Kolkata'
+  });
+
+  let subject = '';
+  let body = '';
+
+  if (enquiry.service_type === 'admission') {
+    const programName = enquiry.interested_program || 'Degree / Course Program';
+    subject = `Enquiry Leads: Admission - ${programName} - ${enquiry.full_name} (ID: ${enquiry.id})`;
+    body = `ENQUIRY REFERENCE ID: ${enquiry.id}
+DELIVERY STATUS: Delivered to Support Desk (${ADMIN_NOTIFICATION_EMAIL})
+DATE & TIME: ${formattedDate} IST
+
+APPLICANT DETAILS:
+• Full Name: ${enquiry.full_name}
+• Mobile / WhatsApp: ${enquiry.phone}
+• Email Address: ${enquiry.email || 'Not provided'}
+• City / District: ${enquiry.city_district || 'Not provided'}
+• Current Qualification: ${enquiry.education_level || 'Not specified'}
+• Preferred Study Mode: ${enquiry.learning_mode || 'Flexible Learning'}
+
+PROGRAM APPLIED FOR:
+${programName}
+
+SPECIFIC QUERIES / CANDIDATE MESSAGE:
+${enquiry.message && enquiry.message.trim() ? enquiry.message.trim() : 'Please provide the curriculum details, fee structure, and next admission batch schedule.'}
+
+--------------------------------------------------
+CONFIRMATION NOTICE:
+This inquiry has been officially registered with Reference ID ${enquiry.id}.
+A confirmation receipt has also been dispatched to ${enquiry.email || 'the applicant'}.
+An admissions counselor will review this inquiry and respond within 24 business hours.`;
+  } else if (enquiry.service_type === 'career_guidance') {
+    const area = enquiry.area_of_interest || 'Career Guidance';
+    subject = `Enquiry Leads: Career Guidance - ${area} - ${enquiry.full_name} (ID: ${enquiry.id})`;
+    body = `ENQUIRY REFERENCE ID: ${enquiry.id}
+DELIVERY STATUS: Delivered to Support Desk (${ADMIN_NOTIFICATION_EMAIL})
+DATE & TIME: ${formattedDate} IST
+
+APPLICANT DETAILS:
+• Full Name: ${enquiry.full_name}
+• Mobile / WhatsApp: ${enquiry.phone}
+• Email Address: ${enquiry.email || 'Not provided'}
+• City / District: ${enquiry.city_district || 'Not provided'}
+• Current Status: ${enquiry.current_status || 'Not specified'}
+• Area of Interest: ${enquiry.area_of_interest || 'Not specified'}
+• Career Goal: ${enquiry.career_goal || 'Not specified'}
+• Preferred Contact Method: ${enquiry.preferred_contact_method || 'WhatsApp / Phone'}
+
+MESSAGE / SPECIFIC QUERIES:
+${enquiry.message && enquiry.message.trim() ? enquiry.message.trim() : 'I would like to request a 1-on-1 counseling session to evaluate career and educational pathways.'}
+
+--------------------------------------------------
+CONFIRMATION NOTICE:
+This career guidance request has been registered with Reference ID ${enquiry.id}.
+A confirmation receipt has also been dispatched to ${enquiry.email || 'the applicant'}.
+A senior advisor will contact the candidate within 24 business hours.`;
+  } else if (enquiry.service_type === 'recruitment') {
+    const org = enquiry.organization_name || 'Corporate Staffing';
+    subject = `Enquiry Leads: Corporate Hiring - ${org} - ${enquiry.full_name} (ID: ${enquiry.id})`;
+    body = `ENQUIRY REFERENCE ID: ${enquiry.id}
+DELIVERY STATUS: Delivered to Support Desk (${ADMIN_NOTIFICATION_EMAIL})
+DATE & TIME: ${formattedDate} IST
+
+ORGANIZATION & CONTACT DETAILS:
+• Organization / Company: ${enquiry.organization_name || 'Not specified'}
+• Contact Person: ${enquiry.full_name}
+• Phone Number: ${enquiry.phone}
+• Official Email: ${enquiry.email || 'Not provided'}
+• Office Location: ${enquiry.city_district || 'Not provided'}
+• Recruitment Requirement: ${enquiry.recruitment_requirement || 'Workforce Staffing'}
+• Positions Needed: ${enquiry.number_of_positions || '1-5'}
+
+HIRING REQUIREMENTS:
+${enquiry.message && enquiry.message.trim() ? enquiry.message.trim() : 'We would like to connect with Talent Path Solutions to discuss corporate staffing and hiring timelines.'}
+
+--------------------------------------------------
+CONFIRMATION NOTICE:
+This corporate inquiry has been logged with Reference ID ${enquiry.id}.
+A confirmation notice has been sent to ${enquiry.email || 'the authorized contact'}.
+The corporate staffing desk will contact the representative within 24 business hours.`;
+  } else {
+    const topic = enquiry.interested_program || 'General Information';
+    subject = `Enquiry Leads: Support - ${topic} - ${enquiry.full_name} (ID: ${enquiry.id})`;
+    body = `ENQUIRY REFERENCE ID: ${enquiry.id}
+DELIVERY STATUS: Delivered to Support Desk (${ADMIN_NOTIFICATION_EMAIL})
+DATE & TIME: ${formattedDate} IST
+
+CONTACT DETAILS:
+• Full Name: ${enquiry.full_name}
+• Phone: ${enquiry.phone}
+• Email Address: ${enquiry.email || 'Not provided'}
+• Subject Topic: ${topic}
+
+MESSAGE:
+${enquiry.message && enquiry.message.trim() ? enquiry.message.trim() : 'Please reach out regarding this inquiry.'}
+
+--------------------------------------------------
+CONFIRMATION NOTICE:
+This enquiry has been registered with Reference ID ${enquiry.id}.
+A delivery confirmation has been sent to ${enquiry.email || 'the user'}.
+Our support desk will respond within 24 business hours.`;
+  }
+
+  const encodedSubject = encodeURIComponent(subject);
+  const encodedBody = encodeURIComponent(body);
+  const ccParam = enquiry.email ? `&cc=${encodeURIComponent(enquiry.email)}` : '';
+
+  const mailtoUrl = `mailto:${ADMIN_NOTIFICATION_EMAIL}?subject=${encodedSubject}${ccParam}&body=${encodedBody}`;
+  const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(ADMIN_NOTIFICATION_EMAIL)}${ccParam}&su=${encodedSubject}&body=${encodedBody}`;
+
+  const thankYouSubject = `Inquiry Confirmation: Talent Path Solutions [Ref: ${enquiry.id}]`;
+  const thankYouBody = `Dear ${enquiry.full_name},
+
+Thank you for contacting Talent Path Solutions. We have received your inquiry and registered your reference ticket with our advisory team.
+
+REFERENCE TICKET ID: ${enquiry.id}
+Service Category: ${(enquiry.service_type || 'general').replace(/_/g, ' ').toUpperCase()}
+Submission Date: ${formattedDate} IST
+Contact Email: ${enquiry.email || 'Not provided'}
+Contact Phone: ${enquiry.phone || 'Not provided'}
+City / District: ${enquiry.city_district || 'Not specified'}
+
+WHAT HAPPENS NEXT?
+1. Advisor Review: A dedicated counselor is reviewing your profile and requirements.
+2. Pathway Assessment: We review eligibility, curriculum options, or hiring timelines.
+3. Direct Consultation: We will reach out via Phone / WhatsApp within 24 business hours.
+
+DIRECT CONTACT & SUPPORT:
+• Helpline / Call: +91 98765 43210
+• WhatsApp: +91 98765 43210
+• Support Email: ${ADMIN_NOTIFICATION_EMAIL}
+• Operating Hours: Monday – Saturday: 9:30 AM – 6:30 PM IST
+
+Warm regards,
+Admissions & Counseling Team
+Talent Path Solutions`;
+
+  return { subject, body, mailtoUrl, gmailWebUrl, thankYouSubject, thankYouBody };
+}
+
+export interface EmailDeliveryStatus {
+  dispatched: boolean;
+  adminLeadSent: boolean;
+  thankYouSent: boolean;
+  thankYouTo?: string;
+  error?: string;
+}
+
+/**
+ * Dispatches an automated structured email via Google SMTP Service (/api/send-enquiry)
+ * with CC, BCC, Recipient, and structured body.
+ */
+async function dispatchEmailToInbox(enquiry: Enquiry, _structured: StructuredEmailResult): Promise<EmailDeliveryStatus> {
+  try {
+    const res = await fetch('/api/send-enquiry', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(enquiry)
+    });
+
+    if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      const adminSent = Boolean(data?.adminLead?.messageId || data?.messageId);
+      const thankYouSent = Boolean(data?.userThankYou?.sent);
+      console.log(`✅ [Google SMTP] Enquiry ${enquiry.id} delivered via /api/send-enquiry (Admin: ${adminSent ? 'Sent' : 'Failed'}, Thank You Email: ${thankYouSent ? 'Sent to ' + (data?.userThankYou?.to || enquiry.email) : 'Pending'})`);
+      return {
+        dispatched: true,
+        adminLeadSent: adminSent,
+        thankYouSent: thankYouSent,
+        thankYouTo: data?.userThankYou?.to || enquiry.email,
+        error: data?.userThankYou?.error
+      };
+    } else {
+      const err = await res.json().catch(() => ({}));
+      const errMsg = err?.error || `Server returned ${res.status}`;
+      console.warn(`[Google SMTP] Server responded with status ${res.status}:`, err);
+      return {
+        dispatched: false,
+        adminLeadSent: false,
+        thankYouSent: false,
+        error: errMsg
+      };
+    }
+  } catch (err: any) {
+    console.warn('[Google SMTP Note] Background email dispatch note (fallback to local cache & mailto):', err);
+    return {
+      dispatched: false,
+      adminLeadSent: false,
+      thankYouSent: false,
+      error: err?.message || 'Network error connecting to email API'
+    };
+  }
+}
+
+export interface SubmitEnquiryResult {
+  success: boolean;
+  id: string;
+  error?: string;
+  emailData?: StructuredEmailResult;
+  emailDelivery?: EmailDeliveryStatus;
+}
+
 export const enquiryService = {
   /**
    * Helper to filter an enquiry array with criteria
@@ -144,27 +350,16 @@ export const enquiryService = {
   },
 
   /**
-   * Submit an enquiry or registration.
-   * REQUIRES an active logged-in user account.
+   * Submit an enquiry or registration and dispatch structured notification to sagaru.works@gmail.com
    */
-  async submitEnquiry(input: SubmitEnquiryInput): Promise<{ success: boolean; id: string; error?: string }> {
-    // 1. Enforce account verification: User must be signed in or registered
-    const session = authService.getSession();
-    if (!session) {
-      return { 
-        success: false, 
-        id: '', 
-        error: 'Account required: Please create a free account or sign in first to submit your enquiry and track progress.' 
-      };
-    }
-
-    // 2. Honeypot anti-spam check
+  async submitEnquiry(input: SubmitEnquiryInput): Promise<SubmitEnquiryResult> {
+    // 1. Honeypot anti-spam check
     if (input.honeypot && input.honeypot.trim() !== '') {
       console.warn('Spam submission detected and dropped.');
       return { success: true, id: 'SPAM-FILTERED' };
     }
 
-    // 3. Validate mandatory consent
+    // 2. Validate mandatory consent
     if (!input.consent_given) {
       return { success: false, id: '', error: 'Privacy policy consent is required.' };
     }
@@ -174,10 +369,10 @@ export const enquiryService = {
     const newEnquiry: Enquiry = {
       id: uniqueId,
       created_at: new Date().toISOString(),
-      user_id: session.id,
-      full_name: (input.full_name || session.full_name).trim(),
-      email: (input.email || session.email).trim().toLowerCase(),
-      phone: (input.phone || session.phone || '').trim(),
+      user_id: input.phone || 'public-lead',
+      full_name: (input.full_name || 'Enquiry Candidate').trim(),
+      email: (input.email || '').trim().toLowerCase(),
+      phone: (input.phone || '').trim(),
       service_type: input.service_type,
       status: 'new',
       source_page: input.source_page || window.location.pathname,
@@ -197,39 +392,29 @@ export const enquiryService = {
       notes: []
     };
 
-    // 4. Save to persistent storage cache & broadcast IMMEDIATELY (0ms delay for UI)
+    // 3. Save to persistent storage cache & broadcast IMMEDIATELY (0ms delay for UI)
     const current = getStoredEnquiries();
     setStoredEnquiries([newEnquiry, ...current]);
     trackFormSubmitSuccess(input.service_type, input.service_type);
 
-    // 5. Asynchronously persist to Firebase Realtime Database & Firestore
-    if (isFirebaseConfigured()) {
-      try {
-        const rtdb = getFirebaseRtdb();
-        if (rtdb) {
-          set(ref(rtdb, `enquiries/${uniqueId}`), newEnquiry)
-            .catch(rtdbErr => console.warn('Firebase Realtime Database save note (cached locally):', rtdbErr));
-        }
-        const db = getFirebaseDb();
-        if (db) {
-          setDoc(doc(db, 'enquiries', uniqueId), newEnquiry)
-            .catch(fbErr => console.warn('Firestore enquiry save error (cached locally):', fbErr));
-        }
-      } catch (fbErr: any) {
-        console.warn('Firebase enquiry save error (falling back to cache):', fbErr);
-      }
-    }
+    // 4. Build high-level structured email and asynchronously dispatch via Google SMTP
+    const structured = buildStructuredEmail(newEnquiry);
+    const emailDelivery = await dispatchEmailToInbox(newEnquiry, structured);
 
-    return { success: true, id: uniqueId };
+    return { 
+      success: true, 
+      id: uniqueId, 
+      emailData: structured,
+      emailDelivery
+    };
   },
 
   /**
    * Subscribe to real-time enquiry updates for the Admin CRM.
    * Emits live updates whenever any lead is created, status changed, or note added.
-   * Dual-channel: Listens locally (across all tabs), to Firebase Realtime Database, and to Firestore.
+   * Dual-channel: Listens locally (across all tabs via BroadcastChannel & custom events).
    */
   subscribeToEnquiries(filters: FilterOptions | undefined, callback: (enquiries: Enquiry[]) => void): () => void {
-    // 1. Local update handler (always active, instant across tabs)
     const handleLocalUpdate = () => {
       const local = getStoredEnquiries();
       callback(this.filterEnquiriesList(local, filters));
@@ -244,94 +429,11 @@ export const enquiryService = {
       broadcastChannel.addEventListener('message', handleLocalUpdate);
     }
 
-    // 2. Listen to Firebase Realtime Database (Instant Cloud Stream)
-    let rtdbCleanup: (() => void) | null = null;
-    let firestoreUnsub: (() => void) | null = null;
-
-    if (isFirebaseConfigured()) {
-      const rtdb = getFirebaseRtdb();
-      if (rtdb) {
-        try {
-          const enquiriesRef = ref(rtdb, 'enquiries');
-          onValue(enquiriesRef, (snapshot) => {
-            const val = snapshot.val();
-            if (val && typeof val === 'object') {
-              const localList = getStoredEnquiries();
-              const map = new Map<string, Enquiry>();
-              localList.forEach(e => map.set(e.id, normalizeEnquiry(e, e.id)));
-
-              Object.entries(val).forEach(([k, rawVal]: [string, any]) => {
-                if (!rawVal || typeof rawVal !== 'object') return;
-                const docId = rawVal.id || k;
-                const existing = map.get(k) || map.get(docId);
-                const normalized = normalizeEnquiry({ ...existing, ...rawVal, id: docId }, docId);
-                map.set(normalized.id, normalized);
-              });
-
-              const merged = Array.from(map.values()).sort(
-                (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-              );
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-              callback(this.filterEnquiriesList(merged, filters));
-            }
-          }, (err) => {
-            console.warn('Realtime Database listener note (using resilient local stream):', err.message);
-          });
-          rtdbCleanup = () => off(enquiriesRef);
-        } catch (e) {
-          console.warn('Failed to attach Realtime Database listener:', e);
-        }
-      }
-
-      // Also listen to Firestore in real-time if available
-      const db = getFirebaseDb();
-      if (db) {
-        try {
-          const colRef = collection(db, 'enquiries');
-          firestoreUnsub = onSnapshot(colRef, (snapshot) => {
-            const fbList: any[] = [];
-            snapshot.forEach(docSnap => {
-              fbList.push({ id: docSnap.id, ...docSnap.data() });
-            });
-
-            if (fbList.length > 0) {
-              const localList = getStoredEnquiries();
-              const map = new Map<string, Enquiry>();
-              localList.forEach(e => map.set(e.id, normalizeEnquiry(e, e.id)));
-
-              fbList.forEach(rawDoc => {
-                const docId = rawDoc?.id;
-                const existing = docId ? map.get(docId) : undefined;
-                const normalized = normalizeEnquiry({ ...existing, ...rawDoc }, docId);
-                map.set(normalized.id, normalized);
-              });
-
-              const merged = Array.from(map.values()).sort(
-                (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-              );
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-              callback(this.filterEnquiriesList(merged, filters));
-            }
-          }, (error) => {
-            console.warn('Firestore onSnapshot subscription note:', error.message);
-          });
-        } catch (e) {
-          console.warn('Failed to attach Firestore real-time listener:', e);
-        }
-      }
-    }
-
     return () => {
       window.removeEventListener('tps_enquiries_updated', handleLocalUpdate);
       window.removeEventListener('storage', handleLocalUpdate);
       if (broadcastChannel) {
         broadcastChannel.removeEventListener('message', handleLocalUpdate);
-      }
-      if (rtdbCleanup) {
-        try { rtdbCleanup(); } catch {}
-      }
-      if (firestoreUnsub) {
-        try { firestoreUnsub(); } catch {}
       }
     };
   },
@@ -360,73 +462,11 @@ export const enquiryService = {
       broadcastChannel.addEventListener('message', handleUserUpdate);
     }
 
-    let rtdbCleanup: (() => void) | null = null;
-    let firestoreUnsub: (() => void) | null = null;
-
-    if (isFirebaseConfigured() && (userId || email)) {
-      const rtdb = getFirebaseRtdb();
-      if (rtdb) {
-        try {
-          const enquiriesRef = ref(rtdb, 'enquiries');
-          onValue(enquiriesRef, (snapshot) => {
-            const val = snapshot.val();
-            if (val) {
-              const list: Enquiry[] = Object.values(val);
-              const userItems = list.filter(item => 
-                (userId && item.user_id === userId) ||
-                (email && item.email.toLowerCase() === email.toLowerCase())
-              );
-              userItems.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-              callback(userItems);
-            }
-          }, (err) => {
-            console.warn('RTDB user enquiries note:', err.message);
-          });
-          rtdbCleanup = () => off(enquiriesRef);
-        } catch (e) {
-          console.warn('Failed to attach RTDB user enquiries listener:', e);
-        }
-      }
-
-      const db = getFirebaseDb();
-      if (db) {
-        try {
-          const colRef = collection(db, 'enquiries');
-          firestoreUnsub = onSnapshot(colRef, (snapshot) => {
-            const list: Enquiry[] = [];
-            snapshot.forEach(docSnap => {
-              const item = docSnap.data() as Enquiry;
-              if (
-                (userId && item.user_id === userId) ||
-                (email && item.email.toLowerCase() === email.toLowerCase())
-              ) {
-                list.push(item);
-              }
-            });
-            if (list.length > 0) {
-              list.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-              callback(list);
-            }
-          }, (err) => {
-            console.warn('User enquiries Firestore listener note:', err.message);
-          });
-        } catch (e) {
-          console.warn('Failed to attach user enquiries listener:', e);
-        }
-      }
-    }
-
     return () => {
       window.removeEventListener('tps_enquiries_updated', handleUserUpdate);
       window.removeEventListener('storage', handleUserUpdate);
       if (broadcastChannel) {
         broadcastChannel.removeEventListener('message', handleUserUpdate);
-      }
-      if (rtdbCleanup) {
-        try { rtdbCleanup(); } catch {}
-      }
-      if (firestoreUnsub) {
-        try { firestoreUnsub(); } catch {}
       }
     };
   },
@@ -435,58 +475,7 @@ export const enquiryService = {
    * Fetch enquiries with flexible filtering and sorting
    */
   async getEnquiries(filters?: FilterOptions): Promise<Enquiry[]> {
-    let items = getStoredEnquiries();
-
-    if (isFirebaseConfigured()) {
-      // 1. Try Firebase Realtime Database
-      try {
-        const rtdb = getFirebaseRtdb();
-        if (rtdb) {
-          const snap = await Promise.race([
-            get(ref(rtdb, 'enquiries')),
-            new Promise<null>((resolve) => setTimeout(() => resolve(null), 1200))
-          ]);
-          if (snap && snap.exists()) {
-            const val = snap.val();
-            const rtdbItems: Enquiry[] = Object.values(val);
-            const map = new Map<string, Enquiry>();
-            items.forEach(e => map.set(e.id, e));
-            rtdbItems.forEach(e => map.set(e.id, e));
-            items = Array.from(map.values()).sort(
-              (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-            );
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-          }
-        }
-      } catch (e) {
-        console.warn('Firebase Realtime Database fetch note:', e);
-      }
-
-      // 2. Try Firestore
-      const db = getFirebaseDb();
-      if (db) {
-        try {
-          const snap = await Promise.race([
-            getDocs(collection(db, 'enquiries')),
-            new Promise<null>((resolve) => setTimeout(() => resolve(null), 1200))
-          ]);
-          if (snap && !snap.empty) {
-            const fbItems: Enquiry[] = [];
-            snap.forEach(d => fbItems.push(d.data() as Enquiry));
-            const map = new Map<string, Enquiry>();
-            items.forEach(e => map.set(e.id, e));
-            fbItems.forEach(e => map.set(e.id, e));
-            items = Array.from(map.values()).sort(
-              (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-            );
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-          }
-        } catch (e) {
-          console.warn('Firestore fetch enquiries note:', e);
-        }
-      }
-    }
-
+    const items = getStoredEnquiries();
     return this.filterEnquiriesList(items, filters);
   },
 
@@ -507,40 +496,12 @@ export const enquiryService = {
    * Get single enquiry by ID
    */
   async getEnquiryById(id: string): Promise<Enquiry | null> {
-    if (isFirebaseConfigured()) {
-      try {
-        const rtdb = getFirebaseRtdb();
-        if (rtdb) {
-          const snap = await Promise.race([
-            get(ref(rtdb, `enquiries/${id}`)),
-            new Promise<null>((resolve) => setTimeout(() => resolve(null), 1200))
-          ]);
-          if (snap && snap.exists()) {
-            return snap.val() as Enquiry;
-          }
-        }
-      } catch (e) {
-        console.warn('RTDB get single enquiry note:', e);
-      }
-
-      const db = getFirebaseDb();
-      if (db) {
-        try {
-          const docSnap = await getDoc(doc(db, 'enquiries', id));
-          if (docSnap.exists()) {
-            return docSnap.data() as Enquiry;
-          }
-        } catch (e) {
-          console.warn('Firestore get single enquiry note:', e);
-        }
-      }
-    }
-    const list = await this.getEnquiries();
+    const list = getStoredEnquiries();
     return list.find(e => e.id === id) || null;
   },
 
   /**
-   * Update lead status (syncs to Firebase and localStorage in real-time)
+   * Update lead status (syncs to localStorage and broadcasts across tabs in real-time)
    */
   async updateStatus(id: string, status: EnquiryStatus, assignedTo?: string, followUpDate?: string): Promise<boolean> {
     const updatePayload: Partial<Enquiry> = {
@@ -568,24 +529,6 @@ export const enquiryService = {
       items.push(fullUpdated);
     }
     setStoredEnquiries(items);
-
-    if (isFirebaseConfigured()) {
-      try {
-        const rtdb = getFirebaseRtdb();
-        if (rtdb) {
-          set(ref(rtdb, `enquiries/${id}`), fullUpdated)
-            .catch(e => console.warn('RTDB updateStatus note:', e));
-        }
-        const db = getFirebaseDb();
-        if (db) {
-          setDoc(doc(db, 'enquiries', id), fullUpdated, { merge: true })
-            .catch(e => console.warn('Firestore updateStatus note:', e));
-        }
-      } catch (e) {
-        console.warn('updateStatus cloud sync note:', e);
-      }
-    }
-
     return true;
   },
 
@@ -603,34 +546,16 @@ export const enquiryService = {
 
     const items = getStoredEnquiries();
     const index = items.findIndex(e => e.id === enquiryId);
-    let fullUpdated: Enquiry | null = null;
 
     if (index !== -1) {
       const existingNotes = items[index].notes || [];
       const updatedNotes = [...existingNotes, newNote];
-      fullUpdated = normalizeEnquiry({
+      const fullUpdated = normalizeEnquiry({
         ...items[index],
         notes: updatedNotes
       }, enquiryId);
       items[index] = fullUpdated;
       setStoredEnquiries(items);
-    }
-
-    if (isFirebaseConfigured() && fullUpdated) {
-      try {
-        const rtdb = getFirebaseRtdb();
-        if (rtdb) {
-          set(ref(rtdb, `enquiries/${enquiryId}`), fullUpdated)
-            .catch(e => console.warn('RTDB addNote note:', e));
-        }
-        const db = getFirebaseDb();
-        if (db) {
-          setDoc(doc(db, 'enquiries', enquiryId), fullUpdated, { merge: true })
-            .catch(e => console.warn('Firestore addNote note:', e));
-        }
-      } catch (e) {
-        console.warn('addNote cloud sync note:', e);
-      }
     }
 
     return true;

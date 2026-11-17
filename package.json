@@ -6,15 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "test": "node scripts/run-all-tests.js",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "smtp:test": "node scripts/test-smtp.js",
+    "smtp:server": "node server/smtpServer.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "clsx": "^2.1.1",
-    "firebase": "^13.1.0",
+    "dotenv": "^18.0.9",
     "framer-motion": "^14.1.0",
     "lucide-react": "^1.56.0",
+    "nodemailer": "^10.3.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.90.0",
@@ -24,6 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",

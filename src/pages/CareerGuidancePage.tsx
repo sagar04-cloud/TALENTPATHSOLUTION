@@ -5,12 +5,10 @@ import {
   Target, 
   Lightbulb, 
   CheckCircle, 
-  HelpCircle, 
   Phone,
   MessageCircle,
   Users,
-  Sparkles,
-  ArrowRight
+  Sparkles
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { COMPANY_CONFIG } from '../config/company';

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SEOHead } from '../components/common/SEOHead';
-import { Home, Search, ArrowRight } from 'lucide-react';
+import { Home, ArrowRight } from 'lucide-react';
 
 export const NotFoundPage = () => {
   return (

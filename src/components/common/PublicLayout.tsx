@@ -1,23 +1,21 @@
 import { Outlet } from 'react-router-dom';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { FloatingWhatsApp } from './FloatingWhatsApp';
 
 export const PublicLayout = () => {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 25,
-    restDelta: 0.001
-  });
+  // Smooth fade: 0 opacity at the top of the page to eliminate any initial dot/shadow glitch,
+  // fading smoothly into view once the user actively scrolls.
+  const opacity = useTransform(scrollYProgress, [0, 0.015, 0.04], [0, 0.7, 1]);
 
   return (
     <div className="min-h-screen flex flex-col bg-brand-bgLight text-brand-darkText relative">
-      {/* Top Reading Scroll Progress Bar with luminous indigo-purple gradient */}
+      {/* Top Reading Scroll Progress Bar: smooth GPU transform, zero spring oscillation glitch */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 z-50 origin-left shadow-[0_0_12px_rgba(79,70,229,0.7)]"
-        style={{ scaleX }}
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-brand-blue via-indigo-500 to-blue-400 z-50 origin-left pointer-events-none"
+        style={{ scaleX: scrollYProgress, opacity }}
       />
       <Navbar />
       <main className="flex-1">

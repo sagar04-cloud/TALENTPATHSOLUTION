@@ -3,7 +3,6 @@ import { RecruitmentEnquiryForm } from '../components/forms/RecruitmentEnquiryFo
 import { 
   Building2, 
   Users2, 
-  CheckCircle, 
   Briefcase, 
   ShieldCheck, 
   Clock, 
@@ -11,7 +10,6 @@ import {
   FileCheck,
   Sparkles,
   Zap,
-  ArrowRight,
   Mail,
   MessageCircle,
   Code,

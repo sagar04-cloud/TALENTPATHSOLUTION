@@ -4,16 +4,11 @@ import {
   ShieldCheck, 
   Target, 
   Compass, 
-  Users, 
-  GraduationCap, 
-  CheckCircle2, 
-  ArrowRight,
   Award,
-  BookOpen,
-  Sparkles
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { COMPANY_CONFIG } from '../config/company';
 import { SpotlightCard } from '../components/common/SpotlightCard';
 import { InfiniteMarquee } from '../components/common/InfiniteMarquee';
 

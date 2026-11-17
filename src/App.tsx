@@ -17,17 +17,6 @@ import { ContactPage } from './pages/ContactPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsPage } from './pages/TermsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { AuthPage } from './pages/AuthPage';
-import { UserPortalPage } from './pages/UserPortalPage';
-
-// Admin pages
-import { AdminLayout } from './components/admin/AdminLayout';
-import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
-import { AdminLeadsPage } from './pages/admin/AdminLeadsPage';
-import { AdminProgramsPage } from './pages/admin/AdminProgramsPage';
-import { AdminNewsPage } from './pages/admin/AdminNewsPage';
-import { AdminUsersPage } from './pages/admin/AdminUsersPage';
-import { AdminSettingsPage } from './pages/admin/AdminSettingsPage';
 
 // Analytics initialization
 import { initGA } from './lib/analytics';
@@ -66,24 +55,6 @@ export function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-conditions" element={<TermsPage />} />
-          </Route>
-
-          {/* User / Student Portal */}
-          <Route path="/portal" element={<UserPortalPage />} />
-
-          {/* Authentication Routes (Unified Sign In / Sign Up) */}
-          <Route path="/login" element={<AuthPage />} />
-          <Route path="/signup" element={<AuthPage />} />
-          <Route path="/admin/login" element={<AuthPage />} />
-
-          {/* Authenticated Admin Management Portal */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboardPage />} />
-            <Route path="leads" element={<AdminLeadsPage />} />
-            <Route path="programs" element={<AdminProgramsPage />} />
-            <Route path="users" element={<AdminUsersPage />} />
-            <Route path="news" element={<AdminNewsPage />} />
-            <Route path="settings" element={<AdminSettingsPage />} />
           </Route>
 
           {/* 404 Catch-All Page */}

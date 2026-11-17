@@ -3,14 +3,10 @@ import { AdmissionEnquiryForm } from '../components/forms/AdmissionEnquiryForm';
 import { 
   BookOpen, 
   GraduationCap, 
-  CheckCircle, 
-  HelpCircle, 
   ShieldCheck, 
   Sparkles,
-  ArrowRight,
   Award
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SpotlightCard } from '../components/common/SpotlightCard';
 import { InfiniteMarquee } from '../components/common/InfiniteMarquee';

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Clock, Calendar, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { COMPANY_CONFIG } from '../../config/company';
 import { SpotlightCard } from '../common/SpotlightCard';

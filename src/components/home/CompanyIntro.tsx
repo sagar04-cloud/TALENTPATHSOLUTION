@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Award } from 'lucide-react';
+import { ArrowRight, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AnimatedCounter } from '../common/AnimatedCounter';
 

@@ -77,6 +77,7 @@ export type ProgramCategory =
 
 export interface Program {
   id: string;
+  order: number;
   title: string;
   slug: string;
   category: ProgramCategory;

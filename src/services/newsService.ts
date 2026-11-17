@@ -1,5 +1,5 @@
-import { NewsArticle } from '../types';
-import { INITIAL_NEWS } from '../data/initialData';
+import type { NewsArticle } from '../types/index.ts';
+import { INITIAL_NEWS } from '../data/initialData.ts';
 
 const STORAGE_KEY = 'tps_news_v1';
 

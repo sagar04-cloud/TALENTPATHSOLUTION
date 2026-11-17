@@ -1,4 +1,4 @@
-import { COMPANY_CONFIG } from '../config/company';
+import { COMPANY_CONFIG } from '../config/company.ts';
 
 declare global {
   interface Window {

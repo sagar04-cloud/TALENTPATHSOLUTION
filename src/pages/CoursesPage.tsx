@@ -8,29 +8,28 @@ import {
   Calendar, 
   ShieldCheck, 
   ArrowRight, 
-  MessageSquare,
   X,
-  CheckCircle2,
   Filter,
-  Sparkles,
-  Layers
+  Sparkles
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { programService } from '../services/programService';
+import { programService, sortPrograms } from '../services/programService';
+import { INITIAL_PROGRAMS } from '../data/initialData';
 import { Program } from '../types';
 import { trackProgramView } from '../lib/analytics';
 import { SpotlightCard } from '../components/common/SpotlightCard';
 import { InfiniteMarquee } from '../components/common/InfiniteMarquee';
 
 export const CoursesPage = () => {
-  const [programs, setPrograms] = useState<Program[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [programs, setPrograms] = useState<Program[]>(() => sortPrograms(INITIAL_PROGRAMS));
+  const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalProgram, setActiveModalProgram] = useState<Program | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
+      setLoading(true);
       try {
         const list = await programService.getPublishedPrograms();
         setPrograms(list);
@@ -44,11 +43,20 @@ export const CoursesPage = () => {
   }, []);
 
   const categories = [
-    { key: 'all', label: 'All Offerings' },
+    { key: 'all', label: 'All Programs' },
+    { key: 'sslc_puc', label: 'SSLC & PUC' },
     { key: 'undergraduate', label: 'Undergraduate (UG)' },
-    { key: 'postgraduate', label: 'Postgraduate (PG)' },
-    { key: 'sslc_puc', label: 'SSLC & PUC Pathways' }
+    { key: 'postgraduate', label: 'Postgraduate (PG)' }
   ];
+
+  const getCategoryBadge = (cat: string) => {
+    switch (cat) {
+      case 'sslc_puc': return 'SSLC & PUC';
+      case 'undergraduate': return 'Undergraduate (UG)';
+      case 'postgraduate': return 'Postgraduate (PG)';
+      default: return cat.replace(/_/g, ' ');
+    }
+  };
 
   const filtered = programs.filter(p => {
     const matchCategory = selectedCategory === 'all' || p.category === selectedCategory;
@@ -57,7 +65,7 @@ export const CoursesPage = () => {
       p.short_description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.eligibility.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCategory && matchSearch;
-  });
+  }).sort((a, b) => (a.order || 99) - (b.order || 99));
 
   const openProgramModal = (prog: Program) => {
     setActiveModalProgram(prog);
@@ -148,8 +156,8 @@ export const CoursesPage = () => {
             </div>
 
             {/* Category Filter Pills with fluid spring sliding pill */}
-            <div className="flex flex-wrap items-center gap-2 w-full md:w-auto p-1.5 bg-slate-100/80 rounded-full border border-slate-200/60 relative">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider hidden lg:inline mr-2 ml-2 flex items-center">
+            <div className="inline-flex items-center gap-1.5 p-1.5 bg-slate-100/90 rounded-2xl sm:rounded-full border border-slate-200/80 relative overflow-x-auto no-scrollbar max-w-full shadow-inner">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider hidden xl:inline-flex items-center mr-1 ml-2 shrink-0">
                 <Filter className="w-3.5 h-3.5 mr-1" /> Filter:
               </span>
               {categories.map((c) => {
@@ -158,7 +166,7 @@ export const CoursesPage = () => {
                   <button
                     key={c.key}
                     onClick={() => setSelectedCategory(c.key)}
-                    className={`relative px-4 py-2 rounded-full text-xs font-bold transition-colors z-10 ${
+                    className={`relative px-4 py-2 rounded-xl sm:rounded-full text-xs font-bold transition-all whitespace-nowrap shrink-0 z-10 ${
                       isActive
                         ? 'text-white'
                         : 'text-slate-600 hover:text-brand-blue'
@@ -167,7 +175,7 @@ export const CoursesPage = () => {
                     {isActive && (
                       <motion.div
                         layoutId="coursesFilterPill"
-                        className="absolute inset-0 bg-brand-blue rounded-full shadow-pill -z-10"
+                        className="absolute inset-0 bg-brand-blue rounded-xl sm:rounded-full shadow-pill -z-10"
                         transition={{ type: "spring", stiffness: 450, damping: 35 }}
                       />
                     )}
@@ -233,7 +241,7 @@ export const CoursesPage = () => {
                         {/* Category & Duration */}
                         <div className="flex items-center justify-between">
                           <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-brand-blueLight text-brand-blue border border-brand-blue/20">
-                            {prog.category.replace('_', ' ')}
+                            {getCategoryBadge(prog.category)}
                           </span>
                           <span className="flex items-center text-xs text-slate-500 font-medium">
                             <Clock className="w-3.5 h-3.5 mr-1 text-slate-400" />

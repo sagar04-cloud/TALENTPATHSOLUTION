@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SEOHead } from '../components/common/SEOHead';
 import { AdmissionEnquiryForm } from '../components/forms/AdmissionEnquiryForm';
@@ -26,16 +26,28 @@ import { SpotlightCard } from '../components/common/SpotlightCard';
 
 export const ContactPage = () => {
   const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'admission' | 'career' | 'recruitment' | 'general'>('admission');
   const programFromQuery = searchParams.get('program') || '';
 
-  useEffect(() => {
+  const getInitialTab = (): 'admission' | 'career' | 'recruitment' | 'general' => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'career') return 'career';
+    if (tabParam === 'recruitment') return 'recruitment';
+    if (tabParam === 'general') return 'general';
+    return 'admission';
+  };
+
+  const [activeTab, setActiveTab] = useState<'admission' | 'career' | 'recruitment' | 'general'>(getInitialTab);
+  const [prevQuery, setPrevQuery] = useState(searchParams.toString());
+
+  const currentQuery = searchParams.toString();
+  if (prevQuery !== currentQuery) {
+    setPrevQuery(currentQuery);
     const tabParam = searchParams.get('tab');
     if (tabParam === 'career') setActiveTab('career');
     else if (tabParam === 'recruitment') setActiveTab('recruitment');
     else if (tabParam === 'general') setActiveTab('general');
     else if (tabParam === 'admission' || programFromQuery) setActiveTab('admission');
-  }, [searchParams, programFromQuery]);
+  }
 
   const faqs = [
     {
