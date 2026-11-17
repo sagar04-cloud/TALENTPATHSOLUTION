@@ -137,24 +137,7 @@ npm run build
 
 ---
 
-## 5. Administrative Portal Access (`/admin`)
-
-The website includes a dedicated CRM and CMS system at `/admin`.
-
-### Default Evaluation Credentials:
-- **Email:** `admin@talentpathsolutions.com`
-- **Password:** `TalentPath2025!`
-
-### Admin Capabilities:
-1. **Overview Dashboard:** Total leads, new leads, contacted, qualified, and converted metrics, service breakdown, recent activity.
-2. **Leads Management:** Searchable and filterable table (by service and status), 1-click WhatsApp messaging to candidate, 1-click phone call, lead status changer, follow-up scheduler, internal counselor notes, and **Export to CSV**.
-3. **Programs CMS:** Add, edit descriptions, adjust eligibility/duration/fees, and toggle publication status.
-4. **News CMS:** Write and publish education articles with markdown-style paragraphs and category tags.
-5. **Company Settings:** Manage centralized phone numbers, WhatsApp lines, office addresses, and Google Analytics tracking.
-
----
-
-## 6. Database Setup Instructions (Supabase)
+## 5. Database Setup Instructions (Supabase)
 
 1. Create a project on [Supabase.com](https://supabase.com).
 2. Open the **SQL Editor** in your Supabase Dashboard.
@@ -164,7 +147,7 @@ The website includes a dedicated CRM and CMS system at `/admin`.
    VITE_SUPABASE_URL=https://your-project.supabase.co
    VITE_SUPABASE_ANON_KEY=your-anon-key
    ```
-5. Create an administrative user in **Authentication -> Users** using your team's real email and password.
+6. Create an administrative user in **Authentication -> Users** using your team's real email and password.
 
 ---
 
