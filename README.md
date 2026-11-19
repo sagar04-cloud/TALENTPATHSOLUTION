@@ -235,5 +235,5 @@ The project includes `vercel.json` and serverless functions pre-configured for V
 
 ## 9. License & Ownership
 
-Copyright © 2026 Talent Path Solutions. All rights reserved.
+Copyright © 2026 Talent Path Solutions. All rights reserved. jghkjh
 
