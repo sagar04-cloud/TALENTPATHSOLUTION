@@ -89,6 +89,29 @@ export default async function handler(req, res) {
       });
     }
 
+    // Email validation if present
+    if (payload.email && typeof payload.email === 'string') {
+      const emailTrimmed = payload.email.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailTrimmed.length > 254 || !emailRegex.test(emailTrimmed)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid email address format provided.'
+        });
+      }
+    }
+
+    // Phone validation if present
+    if (payload.phone && typeof payload.phone === 'string') {
+      const phoneDigits = payload.phone.replace(/\D/g, '');
+      if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+        return res.status(400).json({
+          success: false,
+          error: 'Phone number must contain between 7 and 15 digits.'
+        });
+      }
+    }
+
     // Input length boundaries & sanitization
     if (payload.full_name.length > 100) {
       return res.status(400).json({

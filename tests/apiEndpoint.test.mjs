@@ -131,3 +131,59 @@ test('API Endpoint - Rejects name exceeding max character limits', async () => {
   assert.equal(responseData.success, false);
 });
 
+test('API Endpoint - Rejects malformed email address format with 400', async () => {
+  const req = {
+    method: 'POST',
+    body: {
+      full_name: 'John Doe',
+      email: 'not-an-email-address',
+      phone: '+91 98765 43210'
+    }
+  };
+  let statusCode = 0;
+  let responseData = null;
+
+  const res = {
+    setHeader() {},
+    status(code) {
+      statusCode = code;
+      return {
+        json(data) { responseData = data; }
+      };
+    }
+  };
+
+  await handler(req, res);
+  assert.equal(statusCode, 400);
+  assert.equal(responseData.success, false);
+  assert.ok(responseData.error.includes('Invalid email'));
+});
+
+test('API Endpoint - Rejects invalid phone numbers with 400', async () => {
+  const req = {
+    method: 'POST',
+    body: {
+      full_name: 'John Doe',
+      email: 'john@example.com',
+      phone: '123'
+    }
+  };
+  let statusCode = 0;
+  let responseData = null;
+
+  const res = {
+    setHeader() {},
+    status(code) {
+      statusCode = code;
+      return {
+        json(data) { responseData = data; }
+      };
+    }
+  };
+
+  await handler(req, res);
+  assert.equal(statusCode, 400);
+  assert.equal(responseData.success, false);
+  assert.ok(responseData.error.includes('Phone number'));
+});
+

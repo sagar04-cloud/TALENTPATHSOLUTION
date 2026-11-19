@@ -17,7 +17,7 @@
       <img src="https://img.shields.io/github/actions/workflow/status/sagar04-cloud/TALENTPATHSOLUTION/deploy.yml?branch=main&label=CI%20Build%20%26%20Deploy&style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Status" />
     </a>
     <a href="https://github.com/sagar04-cloud/TALENTPATHSOLUTION/actions/workflows/deploy.yml">
-      <img src="https://img.shields.io/badge/Tests-23%20Passing-10B981?style=for-the-badge&logo=node.js&logoColor=white" alt="Tests" />
+      <img src="https://img.shields.io/badge/Tests-25%20Passing-10B981?style=for-the-badge&logo=node.js&logoColor=white" alt="Tests" />
     </a>
   </p>
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { CheckCircle2, AlertCircle, Loader2, Send } from 'lucide-react';
+import { AlertCircle, Loader2, Send } from 'lucide-react';
 import { enquiryService } from '../../services/enquiryService';
 import { trackFormStart, trackRecruitmentEnquiryClick } from '../../lib/analytics';
 import { EnquirySuccessView } from './EnquirySuccessView';
