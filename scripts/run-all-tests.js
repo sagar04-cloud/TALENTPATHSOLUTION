@@ -14,7 +14,14 @@ console.log(`Discovered ${files.length} test suites:`);
 files.forEach(f => console.log(` • ${f}`));
 console.log(`--------------------------------------------------------\n`);
 
-const args = ['--experimental-strip-types', '--test', ...files];
+const major = parseInt(process.versions.node.split('.')[0], 10);
+const minor = parseInt(process.versions.node.split('.')[1], 10);
+const supportsStrip = major > 22 || (major === 22 && minor >= 6);
+
+const args = supportsStrip
+  ? ['--experimental-strip-types', '--test', ...files]
+  : ['--test', ...files];
+
 const child = spawn('node', args, { stdio: 'inherit' });
 
 child.on('exit', (code) => {
@@ -25,4 +32,3 @@ child.on('exit', (code) => {
   }
   process.exit(code ?? 1);
 });
-
