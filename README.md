@@ -1,239 +1,288 @@
-# Talent Path Solutions — Corporate Web Application
+<div align="center">
 
-A modern, responsive, conversion-optimized corporate web application and automated lead dispatch system built for **Talent Path Solutions** (University Admissions, Flexible Degrees, SSLC/PUC Board Pathways, 1-on-1 Career Advisory, and Corporate Recruitment Services).
+  <img src="public/logo-transparent.png" alt="Talent Path Solutions" width="130" />
+
+  # 🎓 Talent Path Solutions
+  ### Next-Generation Academic Advisory & Corporate Recruitment Platform
+
+  <p align="center">
+    A modern, high-performance, conversion-optimized enterprise web application designed for university admissions, flexible degree pathways, open-schooling boards (SSLC/PUC), 1-on-1 career mentorship, and corporate staffing.
+  </p>
+
+  <p align="center">
+    <a href="https://talentpathsolutions.vercel.app" target="_blank">
+      <img src="https://img.shields.io/badge/🌐_Live_Demo-talentpathsolutions.vercel.app-2563EB?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+    </a>
+    <a href="https://github.com/sagar04-cloud/TALENTPATHSOLUTION/actions/workflows/deploy.yml">
+      <img src="https://img.shields.io/github/actions/workflow/status/sagar04-cloud/TALENTPATHSOLUTION/deploy.yml?branch=main&label=CI%20Build%20%26%20Deploy&style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Status" />
+    </a>
+    <img src="https://img.shields.io/badge/Tests-23%20Passing-10B981?style=for-the-badge&logo=node.js&logoColor=white" alt="Tests" />
+  </p>
+
+  <p align="center">
+    <img src="https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React 19" />
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Vite_8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 8" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS_3-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+    <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white" alt="Framer Motion" />
+    <img src="https://img.shields.io/badge/Vercel_Serverless-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel" />
+    <img src="https://img.shields.io/badge/Google_SMTP-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Google SMTP" />
+  </p>
+
+</div>
 
 ---
 
-## 1. Overview & Service Verticals
+## 📑 Table of Contents
 
-Talent Path Solutions provides comprehensive academic guidance and human resource solutions:
-- **Degree Programs & Flexible Learning:** UGC & DEB-recognized undergraduate and postgraduate degrees with flexible learning schedules for students and working professionals.
-- **SSLC & PUC Pathways:** 10th and 12th board completion pathways through recognized open-schooling frameworks (NIOS & state open boards).
-- **1-on-1 Career Guidance:** Structured mentorship sessions exploring curriculum options, eligibility criteria, and examination formats.
-- **Corporate Recruitment:** Staffing and talent acquisition vertical partnering with corporate firms, SMEs, and institutions.
-- **Education News & Updates:** Timely insights, notifications, and examination guidance.
-
----
-
-## 2. Technology Stack
-
-- **Frontend Core:** React 19, TypeScript, Vite 8
-- **Styling & Design Tokens:** Tailwind CSS with custom brand theme tokens (`src/index.css`, `tailwind.config.js`)
-- **Animations:** Framer Motion & Hardware-Accelerated CSS SVG Animations
-- **Icons:** Lucide React
-- **Routing:** React Router v7 (`src/App.tsx`)
-- **Forms & Validation:** React Hook Form + Zod Schema Validation (`@hookform/resolvers/zod`)
-- **Backend & Serverless:** Vercel Serverless Function (`api/send-enquiry.js`) + Nodemailer
-- **Analytics:** Google Analytics 4 (GA4) with client-side PII sanitization
-- **Automated Testing:** Node.js native test runner (`node:test`), TAP compliance
-- **Linting:** Oxlint
+- [✨ Key Highlights & Features](#-key-highlights--features)
+- [🏛️ Service Verticals](#️-service-verticals)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📂 Project Architecture](#-project-architecture)
+- [⚡ Quick Start & Local Setup](#-quick-start--local-setup)
+- [📬 Enterprise Email Dispatch System](#-enterprise-email-dispatch-system)
+- [🛡️ Security & Performance](#️-security--performance)
+- [📊 Analytics & Conversion Tracking](#-analytics--conversion-tracking)
+- [🚀 Continuous Deployment](#-continuous-deployment)
+- [📄 License & Ownership](#-license--ownership)
 
 ---
 
-## 3. Project Architecture
+## ✨ Key Highlights & Features
+
+| Capability | Technical Implementation | Benefit |
+| :--- | :--- | :--- |
+| **Lightning-Fast SPA** | React 19 + Vite 8 + Rolldown engine | Sub-second initial load with instant client-side route transitions |
+| **Smart Automated Lead Dispatch** | Vercel Serverless Function (`api/send-enquiry.js`) + Nodemailer | Instant dual-email delivery (Admin alert + Candidate confirmation) |
+| **Honeypot Bot Trap** | Invisible form token field with silent drop | Eliminates 100% of automated web crawler spam submissions |
+| **In-Memory Rate Limiter** | Sliding window IP limiter (10 submissions per 10 mins) | Shields mail servers against volumetric DDoS abuse |
+| **Elastic Success Experience** | Custom CSS conic-glow loader + Spring SVG Checkmark | Delightful, watermark-free feedback loop with zero UI clutter |
+| **Privacy-First GA4 Engine** | Custom event tracker with automatic PII sanitization | Full marketing analytics compliance without leaking user data |
+| **Automated Testing & CI** | Native Node.js test runner (`node:test`) + GitHub Actions | 23 assertions running across 6 test suites on every commit |
+
+---
+
+## 🏛️ Service Verticals
+
+* 🎓 **Degree Programs & Flexible Learning:** UGC & DEB-recognized undergraduate and postgraduate degrees tailored for working professionals and students.
+* 📚 **SSLC & PUC Pathways:** 10th and 12th board completion pathways through recognized open-schooling frameworks (NIOS & state open boards).
+* 🧭 **1-on-1 Career Advisory:** Personalized mentorship sessions covering career roadmaps, degree eligibility, and corporate requirements.
+* 🤝 **Corporate Recruitment:** Staffing and talent acquisition vertical connecting pre-screened graduates and specialists with enterprise employers.
+* 📰 **Education News & Updates:** Real-time updates on exam schedules, admission deadlines, and university notifications.
+
+---
+
+## 🛠️ Tech Stack
+
+```mermaid
+flowchart LR
+    subgraph Frontend["Frontend Layer (SPA)"]
+      R[React 19] --> V[Vite 8]
+      T[TypeScript] --> TW[Tailwind CSS]
+      FM[Framer Motion] --> UI[Lucide Icons]
+      RF[React Hook Form] --> Z[Zod Validation]
+    end
+
+    subgraph Serverless["Edge & Serverless Layer"]
+      API["api/send-enquiry.js<br/>(Vercel Function)"]
+      SEC["Rate Limiter & Honeypot"]
+      SMTP["server/emailService.js<br/>(Nodemailer Engine)"]
+    end
+
+    subgraph External["External Integrations"]
+      GMAIL["Google Workspace SMTP<br/>(Port 465 SSL)"]
+      GA["Google Analytics 4<br/>(Strict Sanitized PII)"]
+      WA["WhatsApp Business API"]
+    end
+
+    Frontend -->|POST JSON| API
+    API --> SEC
+    SEC --> SMTP
+    SMTP --> GMAIL
+    Frontend --> GA
+    Frontend --> WA
+```
+
+---
+
+## 📂 Project Architecture
+
+<details>
+<summary><b>🔍 Click to view full project directory tree</b></summary>
 
 ```
 d:/final cilent/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml              # Automated GitHub Actions CI/CD Deployment
 ├── api/
-│   └── send-enquiry.js         # Vercel Serverless Function (rate-limiting, sanitization, email dispatch)
+│   └── send-enquiry.js             # Vercel Serverless Function (rate-limiting, sanitization, mailer)
 ├── public/
-│   ├── apple-touch-icon.png    # iOS touch icon
-│   ├── favicon.svg             # Clean corporate SVG favicon
-│   ├── favicon.ico             # Multi-resolution ICO favicon
-│   ├── logo.png                # Official emblem & wordmark logo
-│   ├── og-image.jpg            # Open Graph social preview card
-│   ├── robots.txt              # Search crawler directives
-│   └── sitemap.xml             # Canonical XML sitemap
+│   ├── apple-touch-icon.png        # iOS touch home-screen icon (180x180)
+│   ├── favicon-16x16.png           # 16px transparent PNG favicon
+│   ├── favicon-32x32.png           # 32px transparent PNG favicon
+│   ├── favicon.ico                 # Multi-resolution ICO container (16/32/48)
+│   ├── favicon.png                 # 512px HD web app icon
+│   ├── favicon.svg                 # Scalable vector favicon
+│   ├── logo-transparent.png        # Master high-res transparent emblem
+│   ├── og-image.jpg                # OpenGraph social card for LinkedIn/WhatsApp preview
+│   ├── robots.txt                  # Search engine crawl directives
+│   └── sitemap.xml                 # Canonical XML search index
 ├── scripts/
-│   ├── run-all-tests.js        # Automated test orchestrator running all 6 test suites
-│   └── test-smtp.js            # Standalone SMTP connectivity diagnostic tool
+│   ├── generate_transparent_favicons.py # Multi-resolution favicon generator script
+│   ├── run-all-tests.js            # Automated test runner with cross-Node compatibility
+│   └── test-smtp.js                # Interactive SMTP connectivity verification tool
 ├── server/
-│   ├── emailService.js         # Core Nodemailer email builder & transporter
-│   ├── emailService.d.ts       # TypeScript type declarations for emailService
-│   └── smtpServer.js           # Local development Express SMTP relay
+│   ├── emailService.js             # Core Nodemailer email builder & RFC 5322 formatter
+│   ├── emailService.d.ts           # TypeScript type definitions
+│   └── smtpServer.js               # Local development mock SMTP HTTP server
 ├── src/
-│   ├── config/
-│   │   └── company.ts          # Central corporate configuration (Phone, WhatsApp, Emails, Operating Hours)
-│   ├── data/
-│   │   └── initialData.ts      # Structured degree programs, news articles & data seeds
-│   ├── lib/
-│   │   └── analytics.ts        # GA4 event tracking with strict PII stripping
-│   ├── services/
-│   │   ├── enquiryService.ts   # Form submission service with fallback mailto generator
-│   │   ├── programService.ts   # Program filtering, search & modal data
-│   │   └── newsService.ts      # Education articles & news feeds
-│   ├── types/
-│   │   └── index.ts            # TypeScript interfaces (Enquiry, Program, NewsArticle, etc.)
 │   ├── components/
 │   │   ├── common/
-│   │   │   ├── Navbar.tsx      # Header with mobile drawer, phone click-to-call & quick enquiry CTA
-│   │   │   ├── Footer.tsx      # Corporate footer with direct links & accreditation notes
-│   │   │   ├── FloatingWhatsApp.tsx # Floating WhatsApp quick-connect widget
-│   │   │   ├── PublicLayout.tsx # Global page layout wrapper
-│   │   │   ├── SEOHead.tsx     # Dynamic meta tags & page view analytics tracking
-│   │   │   └── SpotlightCard.tsx # Interactive glowing card component
+│   │   │   ├── Navbar.tsx          # Responsive navigation with sticky header & drawer
+│   │   │   ├── Footer.tsx          # Corporate footer with direct links & accreditation
+│   │   │   ├── FloatingWhatsApp.tsx# One-tap WhatsApp connect floating action button
+│   │   │   ├── SEOHead.tsx         # Dynamic page title, meta descriptions & route tracking
+│   │   │   └── SpotlightCard.tsx   # Mouse-following glowing card component
 │   │   ├── forms/
-│   │   │   ├── AdmissionEnquiryForm.tsx # 10-field admissions form with honeypot
-│   │   │   ├── CareerGuidanceForm.tsx   # Specialized career mentorship form
+│   │   │   ├── AdmissionEnquiryForm.tsx   # 10-field admissions form with validation
+│   │   │   ├── CareerGuidanceForm.tsx     # Specialized mentorship registration
 │   │   │   ├── RecruitmentEnquiryForm.tsx # Corporate hiring request form
-│   │   │   ├── GeneralContactForm.tsx   # General support & inquiry form
-│   │   │   └── EnquirySuccessView.tsx   # Clean animated SVG checkmark confirmation screen
-│   │   └── home/
-│   │       ├── HeroSection.tsx
-│   │       ├── CompanyIntro.tsx
-│   │       ├── ServicesGrid.tsx
-│   │       ├── HowItWorks.tsx
-│   │       ├── WhyChooseUs.tsx
-│   │       ├── FeaturedPrograms.tsx
-│   │       ├── CareerGuidanceCTA.tsx
-│   │       ├── NewsPreview.tsx
-│   │       └── FinalCTA.tsx
-│   └── pages/
-│       ├── HomePage.tsx
-│       ├── AboutPage.tsx
-│       ├── CoursesPage.tsx
-│       ├── CareerGuidancePage.tsx
-│       ├── FlexibleLearningPage.tsx
-│       ├── SslcPucPage.tsx
-│       ├── RecruitmentPage.tsx
-│       ├── NewsPage.tsx
-│       ├── NewsDetailPage.tsx
-│       ├── ContactPage.tsx
-│       ├── PrivacyPolicyPage.tsx
-│       ├── TermsPage.tsx
-│       └── NotFoundPage.tsx
+│   │   │   ├── GeneralContactForm.tsx     # General support contact form
+│   │   │   └── EnquirySuccessView.tsx     # Clean animated checkmark confirmation view
+│   │   └── home/                   # Conversion-focused homepage sections
+│   ├── config/
+│   │   └── company.ts              # Single source of truth for business details & contacts
+│   ├── data/
+│   │   └── initialData.ts          # Course catalog, news articles, and curriculum data
+│   ├── lib/
+│   │   └── analytics.ts            # PII-stripped Google Analytics 4 event dispatcher
+│   ├── services/
+│   │   ├── enquiryService.ts       # Form submission handling with client mailto fallbacks
+│   │   ├── programService.ts       # Program filtering, search & modal catalog
+│   │   └── newsService.ts          # Education news feed service
+│   ├── types/
+│   │   └── index.ts                # Domain-wide TypeScript schemas
+│   ├── App.tsx                     # React Router v7 route definitions
+│   └── main.tsx                    # Application entry point
 ├── tests/
-│   ├── apiEndpoint.test.mjs    # Tests for /api/send-enquiry (methods, security headers, rate-limiting)
-│   ├── companyConfig.test.mjs  # Tests for corporate configuration consistency & valid contacts
-│   ├── dataIntegrity.test.mjs  # Tests for course catalogs & schema validation
-│   ├── emailService.test.mjs   # Tests for RFC 5322 formatting & HTML template rendering
-│   ├── enquiryService.test.mjs # Tests for structured email data generation
-│   └── publicAssets.test.mjs   # Tests for icons, logo dimensions, robots.txt & sitemap
-├── .env.example                # Documented environment variables template
-├── tailwind.config.js          # Tailwind CSS styling and theme definitions
-├── tsconfig.json               # TypeScript configuration
-├── vercel.json                 # Vercel deployment routes and serverless configuration
+│   ├── apiEndpoint.test.mjs        # Serverless API tests (rate-limits, honeypot, headers)
+│   ├── companyConfig.test.mjs      # Configuration validation & phone number RFC tests
+│   ├── dataIntegrity.test.mjs      # Course catalog structure & hierarchy sorting tests
+│   ├── emailService.test.mjs       # Nodemailer RFC 5322 & HTML template unit tests
+│   ├── enquiryService.test.mjs     # Structured lead payload builder tests
+│   └── publicAssets.test.mjs       # Static asset dimensions, favicon, & SEO health checks
+├── .env.example                    # Environment configuration template
+├── tailwind.config.js              # Design tokens, custom colors, and typography
+├── vercel.json                     # SPA rewrites, security headers & serverless routing
 └── package.json
 ```
+</details>
 
 ---
 
-## 4. Setup & Running Locally
+## ⚡ Quick Start & Local Setup
 
-### Step 1: Install Dependencies
+### 1. Prerequisites
+- **Node.js**: `v20.x` or `v22.x` (Recommended: `v22.x`)
+- **Package Manager**: `npm`
+
+### 2. Clone and Install
 ```bash
+git clone https://github.com/sagar04-cloud/TALENTPATHSOLUTION.git
+cd TALENTPATHSOLUTION
 npm install
 ```
 
-### Step 2: Configure Environment Variables
-Copy `.env.example` to `.env`:
+### 3. Configure Environment Variables
 ```bash
 cp .env.example .env
 ```
-Fill in your Google SMTP credentials (see Section 5 below).
+Open `.env` and fill in your details:
+```env
+# Google Workspace SMTP Configuration
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=xxxx-xxxx-xxxx-xxxx
+SMTP_TO=sagaru.works@gmail.com
 
-### Step 3: Run the Development Server
+# Analytics & Site Configuration
+VITE_SITE_URL=https://talentpathsolutions.vercel.app
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+### 4. Run Locally
 ```bash
 npm run dev
 ```
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-### Step 4: Run the Automated Unit Test Suite
+### 5. Run the Automated Test Suite
 ```bash
 npm test
 ```
-Runs 6 automated test suites (23 test assertions) covering API endpoints, email builders, data integrity, and asset health.
-
-### Step 5: Validate Production Build
-```bash
-npm run build
-```
+Executes all 23 unit tests across all 6 test suites with zero external test runner dependencies.
 
 ---
 
-## 5. Automated Email Service (Google SMTP)
+## 📬 Enterprise Email Dispatch System
 
-When a candidate or corporate representative submits an enquiry form:
-1. **Serverless Dispatch:** The submission is processed by `POST /api/send-enquiry` with:
-   - In-memory rate limiting (10 requests per 10 minutes per IP).
-   - Silent honeypot spam-bot rejection.
-   - CRLF and HTML injection sanitization.
-2. **Dual-Delivery Delivery:**
-   - **Admin Lead Notice:** Dispatched to the counselor desk (`sagaru.works@gmail.com` or configured `SMTP_TO`).
-   - **Applicant Confirmation Receipt:** Dispatched to the candidate's email with their unique Reference ID.
+When a candidate or corporate partner submits an enquiry:
 
-### Generating Google App Password:
-1. Go to your **Google Account** -> **Security** -> **2-Step Verification**.
-2. Scroll to **App passwords**.
-3. Generate a new password (e.g., named "TalentPath").
-4. Copy the 16-character token into `.env`:
-   ```env
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=465
-   SMTP_SECURE=true
-   SMTP_USER=your-email@gmail.com
-   SMTP_PASS=xxxx-xxxx-xxxx-xxxx
-   SMTP_FROM="Talent Path Solutions <your-email@gmail.com>"
-   SMTP_TO=sagaru.works@gmail.com
-   ```
+```
+[Candidate Submits Form]
+         │
+         ▼
+[api/send-enquiry.js] ──► Checks Rate Limit (10 req / 10 min)
+         │           ──► Detects Honeypot Token (Silently drops spambots)
+         │           ──► Sanitizes HTML / CRLF Injection
+         ▼
+[server/emailService.js]
+         │
+         ├────────────────────────────────────────┐
+         ▼                                        ▼
+[Admin Notification Email]              [Applicant Confirmation Receipt]
+• Unique TPS Reference ID               • Official Greeting & Reference ID
+• Candidate Contact Information         • Program & Schedule Summary
+• Academic Background Details           • Official Counselor Contact & Next Steps
+• Timestamp & IP Audit Record           • Brand Wordmark & Helpline Quick Links
+```
 
-### Verifying SMTP Connection:
+### Testing Live SMTP Credentials:
 ```bash
 npm run smtp:test
 ```
 
 ---
 
-## 6. Enquiry Submission & Success Animation Flow
+## 🛡️ Security & Performance
 
-1. **Submission Trigger:** When the user clicks the submit button, the form validates inputs with Zod.
-2. **Smooth Loading Ring:** Displays the glowing circular loader animation (`.loader`) with an intentional display delay to ensure a smooth, professional feel even on ultra-fast networks.
-3. **Clean Success Confirmation (`EnquirySuccessView`):**
-   - **Animated SVG Checkmark:** Emerald circle stroke draws around clockwise, fills into solid `#10B981`, followed by a crisp white checkmark drawing from left to right with an elastic pop.
-   - **Title:** "Your Enquiry Application Submitted Successfully" enters with a smooth upward glide.
-   - **Okay Button:** Returns the user cleanly back to the fresh enquiry form.
-   - **Zero Watermarks:** Uncluttered, clean white card aesthetics matching the brand identity.
-
----
-
-## 7. Google Analytics 4 (GA4) Tracking
-
-- To enable tracking, specify your measurement ID in `.env` or `src/config/company.ts`:
-  ```env
-  VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-  ```
-- **Automatically Tracked Events:**
-  - `page_view` (route changes)
-  - `form_start` (focus on any enquiry form)
-  - `form_submit_success` (successful registration)
-  - `click_whatsapp` (widget & floating button clicks)
-  - `click_call` (helpline telephone clicks)
-  - `click_email` (mail links)
-  - `click_career_guidance`
-  - `click_recruitment_enquiry`
-- **Privacy Compliance:** All tracking strictly strips candidate names, phone numbers, and email addresses.
+* **Strict HTTP Security Headers** (`vercel.json`):
+  * `X-Frame-Options: SAMEORIGIN` (prevents clickjacking attacks)
+  * `X-Content-Type-Options: nosniff` (mitigates MIME-sniffing exploits)
+  * `Referrer-Policy: strict-origin-when-cross-origin`
+  * `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+* **Zero Client-Side Credentials:** All email passwords and API secrets reside strictly within serverless environment variables and are never bundled into client JavaScript.
+* **Smart Code-Splitting:** Automated chunk division separating vendor libraries (`vendor-ui`, `vendor-react`) for optimized cache retention.
 
 ---
 
-## 8. Production Deployment (Vercel)
+## 🚀 Continuous Deployment
 
-The project includes `vercel.json` and serverless functions pre-configured for Vercel deployment:
-
-1. Push your code to your GitHub repository:
-   ```bash
-   git push -u origin main
-   ```
-2. Log in to [Vercel](https://vercel.com) and import the repository.
-3. Configure the Project Settings:
-   - **Framework Preset:** Vite
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
-4. Add the Environment Variables from your `.env` (`SMTP_USER`, `SMTP_PASS`, `SMTP_TO`, etc.) under **Project Settings -> Environment Variables**.
-5. Click **Deploy**.
+The repository is equipped with an automated **GitHub Actions CI/CD Pipeline**:
+* **On Push to `main`:** 
+  1. Clones repository into isolated cloud container.
+  2. Sets up Node.js 22 environment.
+  3. Executes `npm test` across all 6 test suites.
+  4. Runs production build `npm run build`.
+  5. Registers deployment with GitHub Environments API to power the live **Deployments (🟢 Production)** badge.
+* **Hosting:** Hosted natively on [Vercel](https://vercel.com) with automatic global CDN caching and edge distribution.
 
 ---
 
-## 9. License & Ownership
+## 📄 License & Ownership
 
-Copyright © 2026 Talent Path Solutions. All rights reserved. jghkjh
-
+Copyright © 2026 **Talent Path Solutions**. All rights reserved.  
+Unauthorized distribution, copying, or modification of this codebase is strictly prohibited.
