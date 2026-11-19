@@ -79,3 +79,4 @@ def generate_favicons():
 
 if __name__ == "__main__":
     generate_favicons()
+

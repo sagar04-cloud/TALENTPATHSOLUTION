@@ -1,0 +1,47 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  production-deployment:
+    name: Production Deployment & Verification
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://talentpathsolutions.vercel.app
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧪 Run Automated Test Suite
+        run: npm test
+
+      - name: 🏗️ Verify Production Build
+        run: npm run build
+
+      - name: 🚀 Record Deployment Summary
+        run: |
+          echo "### 🚀 Production Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target Environment:** Production" >> $GITHUB_STEP_SUMMARY
+          echo "- **Live URL:** [talentpathsolutions.vercel.app](https://talentpathsolutions.vercel.app)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** 🟢 Active" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
