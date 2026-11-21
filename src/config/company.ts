@@ -57,18 +57,18 @@ export const COMPANY_CONFIG: CompanyConfig = {
   shortDescription: "Empowering individuals and institutions through career guidance, flexible degrees, school education programs, and professional recruitment.",
   longDescription: "Talent Path Solutions is a dedicated education consultancy, career advisory, and workforce recruitment firm. We bridge the gap between academic aspiration and professional realization by delivering personalized guidance, flexible learning pathways, and trusted corporate talent solutions.",
   phone: {
-    display: "+91 98765 43210", // Verified placeholder
-    raw: "+919876543210",
+    display: "+91 97389 29550", // Verified phone number
+    raw: "+919738929550",
   },
   whatsapp: {
-    display: "+91 98765 43210", // Verified placeholder
-    raw: "919876543210",
+    display: "+91 97389 29550", // Verified WhatsApp number
+    raw: "919738929550",
     defaultMessage: "Hello Talent Path Solutions! I would like to inquire about your programs and career guidance services.",
   },
   email: {
-    admissions: "sagaru.works@gmail.com",
-    support: "sagaru.works@gmail.com",
-    recruitment: "sagaru.works@gmail.com",
+    admissions: "talentpathsolutions1@gmail.com",
+    support: "talentpathsolutions1@gmail.com",
+    recruitment: "talentpathsolutions1@gmail.com",
   },
   address: {
     street: "Level 4, Corporate Heights, MG Road",

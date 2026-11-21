@@ -126,7 +126,7 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
       className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-soft-sm space-y-4 text-left"
     >
       {/* Honeypot field for spam prevention */}
-      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       {serverError && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-xs flex items-center">
@@ -138,11 +138,13 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Full Name */}
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="admission-full-name" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Full Name <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="admission-full-name"
             type="text"
+            autoComplete="name"
             placeholder="e.g. Rahul Sharma"
             {...register('fullName')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -154,11 +156,13 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
 
         {/* Phone */}
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="admission-phone" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             10-Digit Mobile Number <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="admission-phone"
             type="tel"
+            autoComplete="tel"
             inputMode="numeric"
             maxLength={10}
             placeholder="e.g. 9876543210"
@@ -178,11 +182,13 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Email */}
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="admission-email" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Email Address <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="admission-email"
             type="email"
+            autoComplete="email"
             placeholder="e.g. rahul@example.com"
             {...register('email')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -194,11 +200,13 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
 
         {/* City / District */}
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="admission-city" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             City / District <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="admission-city"
             type="text"
+            autoComplete="address-level2"
             placeholder="e.g. Bengaluru / Mysuru"
             {...register('cityDistrict')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -212,10 +220,11 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Interested Program */}
         <div className="sm:col-span-2">
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="admission-program" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Interested Program / Service <span className="text-brand-blue">*</span>
           </label>
           <select
+            id="admission-program"
             {...register('interestedProgram')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs bg-white focus:outline-none transition-all ${
               errors.interestedProgram ? 'border-red-400 bg-red-50/30' : 'border-slate-200 focus:border-brand-blue'
@@ -238,10 +247,11 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
 
         {/* Preferred Learning Mode */}
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="admission-learning-mode" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Learning Mode
           </label>
           <select
+            id="admission-learning-mode"
             {...register('learningMode')}
             className="w-full px-4 py-2.5 rounded-full border border-slate-200 text-xs bg-white focus:outline-none focus:border-brand-blue"
           >
@@ -256,10 +266,11 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
 
       {/* Education Level */}
       <div>
-        <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+        <label htmlFor="admission-education-level" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
           Current Education Level <span className="text-brand-blue">*</span>
         </label>
         <select
+          id="admission-education-level"
           {...register('educationLevel')}
           className={`w-full px-4 py-2.5 rounded-full border text-xs bg-white focus:outline-none transition-all ${
             errors.educationLevel ? 'border-red-400 bg-red-50/30' : 'border-slate-200 focus:border-brand-blue'
@@ -280,10 +291,11 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
 
       {/* Specific Message / Query */}
       <div>
-        <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+        <label htmlFor="admission-message" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
           Additional Notes or Questions (Optional)
         </label>
         <textarea
+          id="admission-message"
           rows={3}
           placeholder="Share any specific requirements, timing constraints, or questions regarding exams and study material..."
           {...register('message')}
@@ -293,8 +305,9 @@ export const AdmissionEnquiryForm = ({ defaultProgram = '', sourcePage, onSucces
 
       {/* Consent Checkbox */}
       <div className="pt-1">
-        <label className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
+        <label htmlFor="admission-consent" className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
           <input
+            id="admission-consent"
             type="checkbox"
             {...register('consentGiven')}
             className="mt-0.5 rounded border-slate-300 text-brand-blue focus:ring-brand-blue"

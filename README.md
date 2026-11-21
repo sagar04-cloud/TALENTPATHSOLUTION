@@ -222,7 +222,7 @@ SMTP_PORT=465
 SMTP_SECURE=true
 SMTP_USER=your-email@gmail.com
 SMTP_PASS=xxxx-xxxx-xxxx-xxxx
-SMTP_TO=sagaru.works@gmail.com
+SMTP_TO=talentpathsolutions1@gmail.com
 
 # Analytics & Site Configuration
 VITE_SITE_URL=https://talentpathsolutions.vercel.app

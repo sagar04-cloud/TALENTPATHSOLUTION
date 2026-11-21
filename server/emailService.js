@@ -55,7 +55,7 @@ function parseEmailList(input) {
  * Formats a clean RFC 5322 compliant sender address with quoted display name
  */
 export function formatSender(fromEnv, defaultUser) {
-  const user = defaultUser || process.env.SMTP_USER || 'sagaru.works@gmail.com';
+  const user = defaultUser || process.env.SMTP_USER || 'talentpathsolutions1@gmail.com';
   if (fromEnv && typeof fromEnv === 'string' && fromEnv.trim().length > 0) {
     const raw = fromEnv.trim();
     const match = raw.match(/^(?:"?([^"<]+)"?\s+)?<([^>]+)>$/);
@@ -357,6 +357,7 @@ export function formatThankYouEmailText(enquiry) {
   const category = (enquiry.service_type || 'general').replace(/_/g, ' ').toUpperCase();
   const name = (enquiry.full_name || 'Valued Candidate').trim();
   const userEmail = enquiry.email || enquiry.workEmail || enquiry.user_email || 'your email';
+  const supportEmail = process.env.SMTP_TO || process.env.SMTP_USER || 'talentpathsolutions1@gmail.com';
 
   const lines = [
     `Dear ${name},`,
@@ -409,15 +410,15 @@ export function formatThankYouEmailText(enquiry) {
     '',
     '--------------------------------------------------',
     'DIRECT CONTACT & SUPPORT:',
-    '• Helpline / Call : +91 98765 43210',
-    '• WhatsApp        : +91 98765 43210 (https://wa.me/919876543210)',
-    '• Support Email   : sagaru.works@gmail.com',
+    '• Helpline / Call : +91 97389 29550',
+    '• WhatsApp        : +91 97389 29550 (https://wa.me/919738929550)',
+    `• Support Email   : ${supportEmail}`,
     '• Operating Hours : Monday – Saturday, 9:30 AM – 6:30 PM IST',
     '• Official Website: https://talentpathsolutions.com',
     '',
     '--------------------------------------------------',
     `You are receiving this transactional confirmation receipt because an inquiry was submitted on the Talent Path Solutions website for ${userEmail}.`,
-    'If you did not submit this inquiry, please contact our support desk at sagaru.works@gmail.com.',
+    `If you did not submit this inquiry, please contact our support desk at ${supportEmail}.`,
     'Talent Path Solutions • Level 4, Corporate Heights, MG Road, Bengaluru, Karnataka 560001',
     '',
     'Warm regards,',
@@ -446,7 +447,7 @@ export function formatThankYouEmailHtml(enquiry) {
   const name = escapeHtml((enquiry.full_name || 'Valued Candidate').trim());
   const userEmail = escapeHtml((enquiry.email || enquiry.workEmail || enquiry.user_email || '').trim());
   const safePhone = escapeHtml(enquiry.phone) || 'Not provided';
-  const supportEmail = process.env.SMTP_TO || process.env.SMTP_USER || 'sagaru.works@gmail.com';
+  const supportEmail = process.env.SMTP_TO || process.env.SMTP_USER || 'talentpathsolutions1@gmail.com';
 
   let specificDetailsRows = '';
 
@@ -582,8 +583,8 @@ export function formatThankYouEmailHtml(enquiry) {
                 <div style="font-weight: 700; color: #1e3a8a; margin-bottom: 6px;">
                   Direct Support Desk:
                 </div>
-                <div>• Helpline / Call: <a href="tel:+919876543210" style="color: #1e3a8a; font-weight: 600; text-decoration: none;">+91 98765 43210</a></div>
-                <div>• WhatsApp: <a href="https://wa.me/919876543210" style="color: #1e3a8a; font-weight: 600; text-decoration: none;">+91 98765 43210</a></div>
+                <div>• Helpline / Call: <a href="tel:+919738929550" style="color: #1e3a8a; font-weight: 600; text-decoration: none;">+91 97389 29550</a></div>
+                <div>• WhatsApp: <a href="https://wa.me/919738929550" style="color: #1e3a8a; font-weight: 600; text-decoration: none;">+91 97389 29550</a></div>
                 <div>• Support Email: <a href="mailto:${supportEmail}" style="color: #1e3a8a; font-weight: 600; text-decoration: none;">${supportEmail}</a></div>
                 <div>• Operating Hours: Monday – Saturday: 9:30 AM – 6:30 PM IST</div>
               </div>
@@ -635,7 +636,7 @@ export async function sendThankYouEmail(enquiry, existingTransporter = null) {
   const transporter = existingTransporter || createSmtpTransporter();
   const refId = enquiry.id || `TPS-${Date.now().toString().slice(-6)}`;
   const senderFrom = formatSender(process.env.SMTP_FROM, process.env.SMTP_USER);
-  const supportEmail = process.env.SMTP_TO || process.env.SMTP_USER || 'sagaru.works@gmail.com';
+  const supportEmail = process.env.SMTP_TO || process.env.SMTP_USER || 'talentpathsolutions1@gmail.com';
 
   const subjectPrefix = process.env.THANKYOU_SUBJECT_PREFIX || 'Inquiry Confirmation: Talent Path Solutions';
   const subject = `${subjectPrefix} [Ref: ${refId}]`;
@@ -725,7 +726,7 @@ export async function sendThankYouEmail(enquiry, existingTransporter = null) {
 export async function sendEnquiryEmail(enquiry) {
   const transporter = createSmtpTransporter();
 
-  const recipientTo = process.env.SMTP_TO || process.env.SMTP_USER || 'sagaru.works@gmail.com';
+  const recipientTo = process.env.SMTP_TO || process.env.SMTP_USER || 'talentpathsolutions1@gmail.com';
   const recipientCc = parseEmailList(process.env.SMTP_CC);
   const recipientBcc = parseEmailList(process.env.SMTP_BCC);
   const senderFrom = formatSender(process.env.SMTP_FROM, recipientTo);

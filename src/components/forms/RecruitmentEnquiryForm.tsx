@@ -125,7 +125,7 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
       }}
       className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-soft-sm space-y-4 text-left"
     >
-      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       {serverError && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-xs flex items-center">
@@ -136,11 +136,13 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="recruitment-contact-person" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Contact Person <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="recruitment-contact-person"
             type="text"
+            autoComplete="name"
             placeholder="e.g. S. Radhakrishnan"
             {...register('contactPerson')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -151,11 +153,13 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="recruitment-org-name" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Organization / Company <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="recruitment-org-name"
             type="text"
+            autoComplete="organization"
             placeholder="e.g. Acme Tech Solutions"
             {...register('organizationName')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -168,11 +172,13 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="recruitment-work-email" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Work Email Address <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="recruitment-work-email"
             type="email"
+            autoComplete="email"
             placeholder="e.g. hr@acmetech.com"
             {...register('workEmail')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -183,11 +189,13 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="recruitment-phone" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             10-Digit Phone / Contact Number <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="recruitment-phone"
             type="tel"
+            autoComplete="tel"
             inputMode="numeric"
             maxLength={10}
             placeholder="e.g. 9876543210"
@@ -206,10 +214,11 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="recruitment-requirement" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Recruitment Requirement / Roles <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="recruitment-requirement"
             type="text"
             placeholder="e.g. Software Engineers, Sales Executives, Accountants"
             {...register('recruitmentRequirement')}
@@ -221,10 +230,11 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="recruitment-positions" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Estimated Number of Openings
           </label>
           <select
+            id="recruitment-positions"
             {...register('numberOfPositions')}
             className="w-full px-4 py-2.5 rounded-full border border-slate-200 text-xs bg-white focus:outline-none focus:border-brand-blue"
           >
@@ -237,10 +247,11 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+        <label htmlFor="recruitment-message" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
           Role Details, Experience Requirements, or Locations (Optional)
         </label>
         <textarea
+          id="recruitment-message"
           rows={3}
           placeholder="Specify key skills, target cities, required education backgrounds, or any urgent timelines..."
           {...register('message')}
@@ -249,8 +260,9 @@ export const RecruitmentEnquiryForm = ({ sourcePage }: RecruitmentEnquiryFormPro
       </div>
 
       <div className="pt-1">
-        <label className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
+        <label htmlFor="recruitment-consent" className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
           <input
+            id="recruitment-consent"
             type="checkbox"
             {...register('consentGiven')}
             className="mt-0.5 rounded border-slate-300 text-brand-blue focus:ring-brand-blue"

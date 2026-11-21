@@ -99,7 +99,7 @@ export interface SubmitEnquiryInput {
   number_of_positions?: string;
 }
 
-export const ADMIN_NOTIFICATION_EMAIL = 'sagaru.works@gmail.com';
+export const ADMIN_NOTIFICATION_EMAIL = 'talentpathsolutions1@gmail.com';
 
 export interface StructuredEmailResult {
   subject: string;
@@ -247,8 +247,8 @@ WHAT HAPPENS NEXT?
 3. Direct Consultation: We will reach out via Phone / WhatsApp within 24 business hours.
 
 DIRECT CONTACT & SUPPORT:
-• Helpline / Call: +91 98765 43210
-• WhatsApp: +91 98765 43210
+• Helpline / Call: +91 97389 29550
+• WhatsApp: +91 97389 29550
 • Support Email: ${ADMIN_NOTIFICATION_EMAIL}
 • Operating Hours: Monday – Saturday: 9:30 AM – 6:30 PM IST
 
@@ -286,13 +286,19 @@ async function dispatchEmailToInbox(enquiry: Enquiry, _structured: StructuredEma
       const data = await res.json().catch(() => ({}));
       const adminSent = Boolean(data?.adminLead?.messageId || data?.messageId);
       const thankYouSent = Boolean(data?.userThankYou?.sent);
-      console.log(`✅ [Google SMTP] Enquiry ${enquiry.id} delivered via /api/send-enquiry (Admin: ${adminSent ? 'Sent' : 'Failed'}, Thank You Email: ${thankYouSent ? 'Sent to ' + (data?.userThankYou?.to || enquiry.email) : 'Pending'})`);
+      
+      if (!adminSent && !thankYouSent) {
+        console.warn(`⚠️ [Google SMTP Alert] Neither Admin Lead nor Client Thank-You email could be dispatched. Check SMTP credentials in .env. Admin: ${data?.adminLead?.error || 'failed'}, Client: ${data?.userThankYou?.error || 'failed'}`);
+      } else {
+        console.log(`✅ [Google SMTP] Enquiry ${enquiry.id} delivered via /api/send-enquiry (Admin: ${adminSent ? 'Sent' : 'Failed'}, Thank You Email: ${thankYouSent ? 'Sent to ' + (data?.userThankYou?.to || enquiry.email) : 'Pending'})`);
+      }
+
       return {
         dispatched: true,
         adminLeadSent: adminSent,
         thankYouSent: thankYouSent,
         thankYouTo: data?.userThankYou?.to || enquiry.email,
-        error: data?.userThankYou?.error
+        error: data?.userThankYou?.error || data?.adminLead?.error
       };
     } else {
       const err = await res.json().catch(() => ({}));
@@ -350,7 +356,7 @@ export const enquiryService = {
   },
 
   /**
-   * Submit an enquiry or registration and dispatch structured notification to sagaru.works@gmail.com
+   * Submit an enquiry or registration and dispatch structured notification to talentpathsolutions1@gmail.com
    */
   async submitEnquiry(input: SubmitEnquiryInput): Promise<SubmitEnquiryResult> {
     // 1. Honeypot anti-spam check

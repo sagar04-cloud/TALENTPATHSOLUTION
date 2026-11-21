@@ -31,5 +31,5 @@ test('Enquiry Service - buildStructuredEmail generates complete email data', () 
   assert.ok(result.thankYouSubject.includes('Inquiry Confirmation'), 'Thank You subject is transactional and inbox-safe');
   assert.ok(result.thankYouSubject.includes('ENQ-UNIT-01'), 'Thank You subject contains reference ID');
   assert.ok(result.thankYouBody.includes('Dear Aditya Verma,'), 'Thank You body has personalized greeting');
-  assert.ok(result.thankYouBody.includes('+91 98765 43210'), 'Thank You body has support phone number');
+  assert.ok(result.thankYouBody.includes('+91 97389 29550'), 'Thank You body has support phone number');
 });

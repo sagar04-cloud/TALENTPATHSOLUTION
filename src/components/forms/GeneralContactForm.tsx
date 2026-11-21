@@ -109,7 +109,7 @@ export const GeneralContactForm = () => {
       onFocus={() => trackFormStart('general_contact_form')}
       className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-soft-sm space-y-4 text-left"
     >
-      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       {serverError && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-xs flex items-center">
@@ -120,11 +120,13 @@ export const GeneralContactForm = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="contact-name" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Your Name <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="contact-name"
             type="text"
+            autoComplete="name"
             placeholder="e.g. John Doe"
             {...register('name')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -135,11 +137,13 @@ export const GeneralContactForm = () => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="contact-email" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Email Address <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="contact-email"
             type="email"
+            autoComplete="email"
             placeholder="e.g. john@example.com"
             {...register('email')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -152,11 +156,13 @@ export const GeneralContactForm = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="contact-phone" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             10-Digit Mobile (Optional)
           </label>
           <input
+            id="contact-phone"
             type="tel"
+            autoComplete="tel"
             inputMode="numeric"
             maxLength={10}
             placeholder="e.g. 9876543210"
@@ -171,10 +177,11 @@ export const GeneralContactForm = () => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="contact-subject" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Subject <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="contact-subject"
             type="text"
             placeholder="e.g. General Inquiry / Partnership"
             {...register('subject')}
@@ -187,10 +194,11 @@ export const GeneralContactForm = () => {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+        <label htmlFor="contact-message" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
           Message <span className="text-brand-blue">*</span>
         </label>
         <textarea
+          id="contact-message"
           rows={4}
           placeholder="How can we assist you today?"
           {...register('message')}
@@ -202,8 +210,9 @@ export const GeneralContactForm = () => {
       </div>
 
       <div className="pt-1">
-        <label className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
+        <label htmlFor="contact-consent" className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
           <input
+            id="contact-consent"
             type="checkbox"
             {...register('consentGiven')}
             className="mt-0.5 rounded border-slate-300 text-brand-blue focus:ring-brand-blue"

@@ -93,6 +93,9 @@ export const FloatingWhatsApp = () => {
           <div className="p-3 bg-white space-y-2">
             <div className="flex items-center space-x-2">
               <input
+                id="floating-whatsapp-input"
+                aria-label="Type WhatsApp message"
+                autoComplete="off"
                 type="text"
                 placeholder="Type your message..."
                 value={message}

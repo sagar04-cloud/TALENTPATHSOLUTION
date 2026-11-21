@@ -83,7 +83,7 @@ test('Email Service - Applicant Thank You Plain Text Formatting', () => {
   assert.ok(text.includes('TPS-TEST-102'), 'Includes Reference ID');
   assert.ok(text.includes('Dear Rahul Kumar,'), 'Includes Personalized Greeting');
   assert.ok(text.includes('Data Science'), 'Includes Area of Interest');
-  assert.ok(text.includes('+91 98765 43210'), 'Includes Helpline Contact');
+  assert.ok(text.includes('+91 97389 29550'), 'Includes Helpline Contact');
   assert.ok(text.includes('talentpathsolutions.com'), 'Includes Official Website');
   assert.ok(!text.includes('================================================================================'), 'No spammy 80-char ASCII banners');
 });

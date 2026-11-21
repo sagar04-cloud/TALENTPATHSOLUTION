@@ -128,7 +128,7 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
       }}
       className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-soft-sm space-y-4 text-left"
     >
-      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       {serverError && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-xs flex items-center">
@@ -139,11 +139,13 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="career-full-name" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Full Name <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="career-full-name"
             type="text"
+            autoComplete="name"
             placeholder="e.g. Priya Nair"
             {...register('fullName')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -154,11 +156,13 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="career-phone" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             10-Digit Mobile Number <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="career-phone"
             type="tel"
+            autoComplete="tel"
             inputMode="numeric"
             maxLength={10}
             placeholder="e.g. 9876543210"
@@ -177,11 +181,13 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="career-email" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Email Address <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="career-email"
             type="email"
+            autoComplete="email"
             placeholder="e.g. priya@example.com"
             {...register('email')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs focus:outline-none transition-all ${
@@ -192,10 +198,11 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="career-status" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Current Education / Status <span className="text-brand-blue">*</span>
           </label>
           <select
+            id="career-status"
             {...register('currentStatus')}
             className={`w-full px-4 py-2.5 rounded-full border text-xs bg-white focus:outline-none transition-all ${
               errors.currentStatus ? 'border-red-400 bg-red-50/30' : 'border-slate-200 focus:border-brand-blue'
@@ -216,10 +223,11 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="career-area-interest" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Primary Area of Interest <span className="text-brand-blue">*</span>
           </label>
           <input
+            id="career-area-interest"
             type="text"
             placeholder="e.g. Software, Management, Banking, Civil Services"
             {...register('areaOfInterest')}
@@ -231,10 +239,11 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+          <label htmlFor="career-contact-pref" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
             Preferred Contact Method
           </label>
           <select
+            id="career-contact-pref"
             {...register('preferredContactMethod')}
             className="w-full px-4 py-2.5 rounded-full border border-slate-200 text-xs bg-white focus:outline-none focus:border-brand-blue"
           >
@@ -246,10 +255,11 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
+        <label htmlFor="career-goal" className="block text-xs font-semibold text-brand-darkText uppercase tracking-wider mb-1.5">
           What is your ultimate career goal? <span className="text-brand-blue">*</span>
         </label>
         <textarea
+          id="career-goal"
           rows={3}
           placeholder="Describe what kind of job or industry you want to reach, or what dilemmas you currently face in choosing a stream..."
           {...register('careerGoal')}
@@ -261,8 +271,9 @@ export const CareerGuidanceForm = ({ sourcePage }: CareerGuidanceFormProps) => {
       </div>
 
       <div className="pt-1">
-        <label className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
+        <label htmlFor="career-consent" className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
           <input
+            id="career-consent"
             type="checkbox"
             {...register('consentGiven')}
             className="mt-0.5 rounded border-slate-300 text-brand-blue focus:ring-brand-blue"

@@ -166,15 +166,12 @@ export const ContactPage = () => {
                   </div>
                   <div className="space-y-1">
                     <h4 className="font-heading font-bold text-sm text-brand-darkText">Official Inquiries</h4>
-                    <p className="text-xs text-slate-600">
-                      Admissions: <a href={`mailto:${COMPANY_CONFIG.email.admissions}`} onClick={() => trackEmailClick('contact_admissions')} className="text-brand-blue font-semibold hover:underline">{COMPANY_CONFIG.email.admissions}</a>
+                    <p className="text-sm font-semibold text-slate-800">
+                      <a href={`mailto:${COMPANY_CONFIG.email.support}`} onClick={() => trackEmailClick('contact_official_email')} className="text-brand-blue hover:underline">
+                        {COMPANY_CONFIG.email.support}
+                      </a>
                     </p>
-                    <p className="text-xs text-slate-600">
-                      Recruitment: <a href={`mailto:${COMPANY_CONFIG.email.recruitment}`} onClick={() => trackEmailClick('contact_recruitment')} className="text-brand-blue font-semibold hover:underline">{COMPANY_CONFIG.email.recruitment}</a>
-                    </p>
-                    <p className="text-xs text-slate-600">
-                      General: <a href={`mailto:${COMPANY_CONFIG.email.support}`} onClick={() => trackEmailClick('contact_general')} className="text-brand-blue font-semibold hover:underline">{COMPANY_CONFIG.email.support}</a>
-                    </p>
+                    <p className="text-xs text-slate-500">Admissions, Career Guidance & Recruitment</p>
                   </div>
                 </SpotlightCard>
 
