@@ -17,6 +17,19 @@ const ipRateMap = new Map();
 function isRateLimited(clientIp) {
   if (!clientIp) return false;
   const now = Date.now();
+
+  // Prune stale entries if map exceeds 1000 entries to prevent memory accumulation
+  if (ipRateMap.size > 1000) {
+    for (const [ip, times] of ipRateMap.entries()) {
+      const active = times.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+      if (active.length === 0) {
+        ipRateMap.delete(ip);
+      } else {
+        ipRateMap.set(ip, active);
+      }
+    }
+  }
+
   const timestamps = ipRateMap.get(clientIp) || [];
   const validTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
   
@@ -110,6 +123,36 @@ const server = http.createServer((req, res) => {
           res.setHeader('Content-Type', 'application/json');
           res.statusCode = 400;
           res.end(JSON.stringify({ success: false, error: 'Full name exceeds maximum allowed length of 100 characters.' }));
+          return;
+        }
+
+        // Email validation if present
+        if (payload.email && typeof payload.email === 'string') {
+          const emailTrimmed = payload.email.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (emailTrimmed.length > 254 || !emailRegex.test(emailTrimmed)) {
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.end(JSON.stringify({ success: false, error: 'Invalid email address format provided.' }));
+            return;
+          }
+        }
+
+        // Phone validation if present
+        if (payload.phone && typeof payload.phone === 'string') {
+          const phoneDigits = payload.phone.replace(/\D/g, '');
+          if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 400;
+            res.end(JSON.stringify({ success: false, error: 'Phone number must contain between 7 and 15 digits.' }));
+            return;
+          }
+        }
+
+        if (payload.message && typeof payload.message === 'string' && payload.message.length > 5000) {
+          res.setHeader('Content-Type', 'application/json');
+          res.statusCode = 400;
+          res.end(JSON.stringify({ success: false, error: 'Message exceeds maximum allowed length of 5000 characters.' }));
           return;
         }
 

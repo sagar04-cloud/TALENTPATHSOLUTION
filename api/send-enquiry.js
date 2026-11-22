@@ -8,6 +8,19 @@ const MAX_REQUESTS_PER_WINDOW = 10; // Max 10 submissions per 10 mins per IP
 function isRateLimited(clientIp) {
   if (!clientIp) return false;
   const now = Date.now();
+
+  // Prune stale entries if map exceeds 1000 entries to prevent memory accumulation
+  if (rateLimitMap.size > 1000) {
+    for (const [ip, times] of rateLimitMap.entries()) {
+      const active = times.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+      if (active.length === 0) {
+        rateLimitMap.delete(ip);
+      } else {
+        rateLimitMap.set(ip, active);
+      }
+    }
+  }
+
   const timestamps = rateLimitMap.get(clientIp) || [];
   const validTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
   
