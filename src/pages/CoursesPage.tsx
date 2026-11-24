@@ -131,9 +131,9 @@ export const CoursesPage = () => {
       <InfiniteMarquee className="border-t-0 shadow-sm" />
 
       {/* Filter and Search Bar with Sticky Backdrop */}
-      <section className="py-6 bg-white/95 backdrop-blur-md border-b border-slate-100 sticky top-16 z-30 shadow-soft-sm">
+      <section className="py-4 sm:py-6 bg-white/95 backdrop-blur-md border-b border-slate-100 sticky top-16 z-30 shadow-soft-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
             
             {/* Search Input */}
             <div className="relative w-full md:w-80 group">
@@ -145,7 +145,7 @@ export const CoursesPage = () => {
                 placeholder="Search programs (BBA, MCA, etc.)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-9 py-2.5 rounded-2xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 bg-slate-50/50 transition-all"
+                className="w-full pl-10 pr-9 py-2.5 rounded-full border border-slate-200 text-xs sm:text-sm focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 bg-slate-50/50 transition-all"
               />
               {searchQuery && (
                 <button
@@ -158,7 +158,7 @@ export const CoursesPage = () => {
             </div>
 
             {/* Category Filter Pills with fluid spring sliding pill */}
-            <div className="inline-flex items-center gap-1.5 p-1.5 bg-slate-100/90 rounded-2xl sm:rounded-full border border-slate-200/80 relative overflow-x-auto no-scrollbar max-w-full shadow-inner">
+            <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 bg-slate-100/90 rounded-full border border-slate-200/80 relative overflow-x-auto no-scrollbar w-full md:w-auto shadow-inner mobile-scroll-hint">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider hidden xl:inline-flex items-center mr-1 ml-2 shrink-0">
                 <Filter className="w-3.5 h-3.5 mr-1" /> Filter:
               </span>
@@ -168,7 +168,7 @@ export const CoursesPage = () => {
                   <button
                     key={c.key}
                     onClick={() => setSelectedCategory(c.key)}
-                    className={`relative px-4 py-2 rounded-xl sm:rounded-full text-xs font-bold transition-all whitespace-nowrap shrink-0 z-10 ${
+                    className={`relative px-3 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap shrink-0 z-10 ${
                       isActive
                         ? 'text-white'
                         : 'text-slate-600 hover:text-brand-blue'
@@ -177,7 +177,7 @@ export const CoursesPage = () => {
                     {isActive && (
                       <motion.div
                         layoutId="coursesFilterPill"
-                        className="absolute inset-0 bg-brand-blue rounded-xl sm:rounded-full shadow-pill -z-10"
+                        className="absolute inset-0 bg-brand-blue rounded-full shadow-pill -z-10"
                         transition={{ type: "spring", stiffness: 450, damping: 35 }}
                       />
                     )}

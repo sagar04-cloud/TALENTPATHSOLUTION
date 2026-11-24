@@ -80,21 +80,21 @@ export const FeaturedPrograms = () => {
           </div>
 
           {/* Single-line Segmented Pill Control Bar */}
-          <div className="inline-flex items-center gap-1.5 p-1.5 bg-slate-100/90 rounded-2xl sm:rounded-full border border-slate-200/80 relative overflow-x-auto no-scrollbar max-w-full shadow-inner self-start lg:self-end">
+          <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 bg-slate-100/90 rounded-full border border-slate-200/80 relative overflow-x-auto no-scrollbar w-full sm:w-auto shadow-inner self-start lg:self-end mobile-scroll-hint">
             {categories.map((c) => {
               const isActive = activeCategory === c.key;
               return (
                 <button
                   key={c.key}
                   onClick={() => setActiveCategory(c.key)}
-                  className={`relative px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-bold transition-all whitespace-nowrap shrink-0 z-10 ${
+                  className={`relative px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-bold transition-all whitespace-nowrap shrink-0 z-10 ${
                     isActive ? 'text-white' : 'text-slate-600 hover:text-brand-blue'
                   }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activeCategoryPill"
-                      className="absolute inset-0 bg-brand-blue rounded-xl sm:rounded-full shadow-pill -z-10"
+                      className="absolute inset-0 bg-brand-blue rounded-full shadow-pill -z-10"
                       transition={{ type: "spring", stiffness: 450, damping: 35 }}
                     />
                   )}

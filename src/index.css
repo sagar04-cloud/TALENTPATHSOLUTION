@@ -22,6 +22,30 @@
   }
 }
 
+/* Hide scrollbar for horizontal scroll containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mobile scroll hint: subtle right-edge fade when content overflows */
+@media (max-width: 639px) {
+  .mobile-scroll-hint {
+    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 85%, transparent 100%);
+  }
+
+  .mobile-scroll-hint:focus-within,
+  .mobile-scroll-hint:active {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 7px;

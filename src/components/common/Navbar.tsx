@@ -27,6 +27,7 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
   const [prevPath, setPrevPath] = useState(location.pathname);
   if (prevPath !== location.pathname) {
     setPrevPath(location.pathname);
@@ -34,10 +35,33 @@ export const Navbar = () => {
     setIsProgramsDropdownOpen(false);
   }
 
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/' || location.pathname === '';
     return location.pathname.startsWith(path);
   };
+
+  const navLinks = [
+    { title: 'Home', path: '/' },
+    { title: 'Courses & Programs', path: '/courses' },
+    { title: 'SSLC & PUC Pathways', path: '/sslc-puc' },
+    { title: 'Flexible & Distance Degrees', path: '/flexible-learning' },
+    { title: 'Mentors & Guidance', path: '/career-guidance' },
+    { title: 'Recruitment', path: '/recruitment' },
+    { title: 'About Us', path: '/about' },
+    { title: 'Contact', path: '/contact' }
+  ];
 
   const programLinks = [
     {
@@ -241,64 +265,60 @@ export const Navbar = () => {
 
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Backdrop and Sheet */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-100 bg-white px-5 pt-3 pb-6 space-y-2 text-left animate-in fade-in duration-200">
-          <div className="flex items-center gap-3 pb-3 mb-2 border-b border-slate-100">
-            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-xs">
-              <img src="/logo-icon.png" alt="Talent Path Solutions Logo" className="w-full h-full object-contain" width="40" height="40" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-heading font-black text-base text-[#06347f] leading-none">
-                TALENT<span className="text-brand-blue">PATH</span>
-              </span>
-              <span className="text-[8px] font-bold text-[#ebb242] tracking-widest uppercase mt-0.5 leading-none">
-                SOLUTIONS
-              </span>
-            </div>
-          </div>
-          <Link to="/" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            Home
-          </Link>
-          <Link to="/courses" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            Courses & Programs
-          </Link>
-          <Link to="/sslc-puc" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            SSLC & PUC Pathways
-          </Link>
-          <Link to="/flexible-learning" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            Flexible & Distance Degrees
-          </Link>
-          <Link to="/career-guidance" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            Mentors & Guidance
-          </Link>
-          <Link to="/recruitment" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            Recruitment
-          </Link>
-          <Link to="/about" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            About Us
-          </Link>
-          <Link to="/contact" className="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-blue">
-            Contact
-          </Link>
+        <>
+          {/* Backdrop to prevent interaction with underlying page and eliminate odd overlaps */}
+          <div 
+            className="fixed inset-0 top-[65px] bg-slate-900/50 backdrop-blur-xs z-30 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
 
-          <div className="pt-3 border-t border-slate-100 space-y-2">
-            <a
-              href={`tel:${COMPANY_CONFIG.phone.raw}`}
-              onClick={() => trackCallClick('mobile_nav')}
-              className="w-full inline-flex items-center justify-center py-2.5 rounded-full border border-slate-200 text-slate-800 text-xs font-bold space-x-2"
-            >
-              <PhoneCall className="w-3.5 h-3.5 text-brand-blue" />
-              <span>Call Admissions: {COMPANY_CONFIG.phone.display}</span>
-            </a>
-            <Link
-              to="/contact?tab=admission"
-              className="w-full inline-flex items-center justify-center py-3 rounded-full bg-gradient-to-r from-brand-blue to-indigo-600 text-white text-xs font-bold uppercase tracking-wider shadow-pill"
-            >
-              Enquire Now
-            </Link>
+          {/* Mobile Drawer */}
+          <div className="fixed top-[65px] left-0 right-0 max-h-[calc(100vh-65px)] overflow-y-auto bg-white border-b border-slate-200 shadow-2xl z-40 lg:hidden px-5 pt-3 pb-8 text-left animate-in slide-in-from-top-2 duration-200">
+            <nav className="space-y-1">
+              {navLinks.map((link) => {
+                const active = isActive(link.path);
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`block px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                      active
+                        ? 'bg-brand-blueLight text-brand-blue font-bold'
+                        : 'text-slate-700 hover:bg-slate-50 hover:text-brand-blue'
+                    }`}
+                  >
+                    {link.title}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <div className="pt-4 mt-3 border-t border-slate-100 space-y-2.5">
+              <a
+                href={`tel:${COMPANY_CONFIG.phone.raw}`}
+                onClick={() => {
+                  trackCallClick('mobile_nav');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full inline-flex items-center justify-center py-2.5 rounded-full border border-slate-200 text-slate-800 text-xs font-bold space-x-2 hover:bg-slate-50 transition-colors"
+              >
+                <PhoneCall className="w-3.5 h-3.5 text-brand-blue" />
+                <span>Call Admissions: {COMPANY_CONFIG.phone.display}</span>
+              </a>
+              <Link
+                to="/contact?tab=admission"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full inline-flex items-center justify-center py-3 rounded-full bg-gradient-to-r from-brand-blue to-indigo-600 text-white text-xs font-bold uppercase tracking-wider shadow-pill hover:shadow-pill-hover transition-all"
+              >
+                Enquire Now
+              </Link>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
